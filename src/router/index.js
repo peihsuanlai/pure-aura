@@ -45,6 +45,12 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: {
+      name: 'Home',
+    },
+  },
 ];
 
 const router = createRouter({
