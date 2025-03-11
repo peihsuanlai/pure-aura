@@ -1,0 +1,79 @@
+footer {
+  background-color: $secondary;
+  font-family: "Noto Serif TC", serif;
+  padding: 1rem 0 1.2rem 0;
+  color: $light-text;
+  @include small {
+    padding: 3rem 0 1.2rem 0;
+  }
+  .row {
+    row-gap: 1.2rem;
+  }
+  i {
+    font-size: 1.125rem;
+    color: $white;
+  }
+  a {
+    color: $light-text;
+    &:hover {
+      color: $primary;
+    }
+  }
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    @include medium {
+      text-align: left;
+      align-items: stretch;
+    }
+    .title {
+      font-weight: bold;
+      color: $primary;
+      font-size: 1.375rem;
+      margin-bottom: 10px;
+    }
+  }
+  img {
+    width: 180px;
+    object-fit: cover;
+  }
+  .contact-info,
+  .social-icons {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+  .social-icons {
+    display: flex;
+    column-gap: 0.5rem;
+    a {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      &:hover {
+        color: $white;
+      }
+    }
+    .line-icon {
+      background-color: #00c300;
+    }
+    .fb-icon {
+      background-color: #1877f2;
+    }
+    .ig-icon {
+      background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+    }
+  }
+  .bottom {
+    text-align: center;
+    font-size: 14px;
+    @include medium {
+      text-align: end;
+    }
+  }
+}

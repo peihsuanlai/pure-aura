@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&display=swap');
+@import '../../../node_modules/bootstrap/scss/functions';
+
+@import './helpers/variables';
+
+@import "../../../node_modules/bootstrap/scss/mixins";
+@import './helpers/fsutility';
+@import "../../../node_modules/bootstrap";
+
+@import './helpers/mixins';
+@import './helpers/base';
+@import './helpers/utilities';
+
+@import './layout/nav';
+@import './layout/footer';
+
+@import './pages/index';
+@import './pages/faq';
