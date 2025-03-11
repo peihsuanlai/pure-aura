@@ -1,0 +1,125 @@
+.w-1920 {
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+.page-bg {
+  background-color: $bg-gray;
+}
+
+.font-title {
+  font-family: "Noto Serif TC", serif;
+}
+
+.text-main {
+  color: $primary;
+}
+
+.text-sub {
+  color: $secondary;
+}
+
+.text-lightBlack {
+  color: $light-text;
+}
+.text-darkBlack {
+  color: $dark-text;
+}
+
+.text-white {
+  color: $white;
+}
+
+// 文字大小
+
+.fs-14 {
+  font-size: 0.875rem;
+}
+
+.fs-16 {
+  font-size: 1rem;
+}
+
+.fs-18 {
+  font-size: 1.125rem;
+}
+
+.fs-20 {
+  font-size: 1.25rem;
+}
+
+.fs-23 {
+  font-size: 1.4375rem;
+}
+
+.fs-24 {
+  font-size: 1.5rem;
+}
+
+.fs-28 {
+  font-size: 1.75rem;
+}
+
+.fs-30 {
+  font-size: 1.875rem;
+}
+
+.fs-32 {
+  font-size: 2rem;
+}
+
+.fs-48 {
+  font-size: 3rem;
+}
+
+.mb-12 {
+  margin-bottom: 12px;
+}
+
+.mb-18 {
+  margin-bottom: 1.125rem;
+}
+
+.mb-20 {
+  margin-bottom: 1.25rem;
+}
+
+.mb-30 {
+  margin-bottom: 1.875rem;
+}
+
+.mb-32 {
+  margin-bottom: 2rem;
+}
+
+.mb-60 {
+  margin-bottom: 3.75rem;
+}
+
+.mb-64 {
+  margin-bottom: 4rem;
+}
+
+.mb-80 {
+  margin-bottom: 5rem;
+}
+
+.py-60 {
+  padding: 3.75rem 0;
+}
+
+.pb-32 {
+  padding-bottom: 2rem;
+}
+
+.d-xxl-block {
+  @include xxlarge {
+    display: block !important;
+  }
+}
+
+.d-xxl-none {
+  @include xxlarge {
+    display: none !important;
+  }
+}

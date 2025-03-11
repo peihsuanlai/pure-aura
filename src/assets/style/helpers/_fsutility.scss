@@ -1,0 +1,14 @@
+$utilities: () !default;
+// 如果兩者中有相同的鍵，後面會覆蓋前面
+$utilities: map-merge(
+  ( 
+    "font-size": (
+      rfs: false,
+      property: font-size,
+      class: fs,
+      values: $font-sizes,
+      responsive:true
+    ),
+  ),
+  $utilities
+);

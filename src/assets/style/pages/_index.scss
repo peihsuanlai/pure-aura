@@ -1,0 +1,280 @@
+.home-banner {
+  .swiper-pagination-bullet-active {
+    background: $primary;
+  }
+}
+
+.home-section {
+  .title {
+    text-align: center;
+    position: relative;
+    margin-bottom: 2rem;
+    &::before {
+      content: "";
+      width: 100%;
+      height: 1px;
+      display: block;
+      background-color: $light-text;
+      position: absolute;
+      left: 0%;
+      top: 50%;
+      @include large {
+        width: 20%;
+        left: 40%;
+      }
+    }
+    span {
+      position: relative;
+      background-color: $bg-gray;
+      padding: 0.7rem 1rem;
+      color: $light-text;
+      font-size: 2rem;
+      z-index: 1;
+    }
+  }
+}
+
+.catrgory-list {
+  row-gap: 1.5rem;
+  justify-content: center;
+  .item {
+    width: 100%;
+    padding-bottom: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      transform: translateY(8px);
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
+
+.brand-container {
+  @include padding(60px, 0);
+  background-color: $secondary;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  &::before {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    background-image: url("/images/shape-right.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 555px;
+    height: 555px;
+    top: -300px;
+    right: -300px;
+    animation: shapeMove 15s linear infinite;
+  }
+  &::after {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    background-image: url("/images/shape-left.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 316px;
+    height: 367px;
+    bottom: -100px;
+    left: -50px;
+    animation: shapeMove 20s linear infinite;
+  }
+  .row {
+    align-items: center;
+    row-gap: 1.5rem;
+  }
+  .img {
+    width: 90%;
+    padding-bottom: 75%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 100px 0 100px 0;
+    margin: 0 auto;
+  }
+  .content {
+    width: 85%;
+    margin: 0 auto;
+    @include small {
+      margin: initial;
+    }
+  }
+  h2.title {
+    position: relative;
+    text-align: left;
+    padding-left: 16px;
+    margin-bottom: 1.5rem;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background-color: $primary;
+    }
+  }
+  h3 {
+    font-family: "Noto Serif TC", serif;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 1.5rem;
+  }
+  p {
+    line-height: 1.6;
+    &:not(:last-child) {
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+@keyframes shapeMove {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.home-img-block {
+  background-color: $white;
+  padding: 60px 0 20px 0;
+}
+
+.limit-sale-container {
+  background-color: $white;
+  .title span {
+    background-color: $white;
+  }
+  .product-list {
+    @include padding(0, 32px);
+    position: relative;
+    .item {
+      width: 100%;
+      &:hover {
+        .overlay {
+          top: 0;
+          transition: all 0.3s ease-in-out;
+        }
+      }
+    }
+    .img {
+      width: 100%;
+      padding-bottom: 80%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    h4 {
+      font-family: "Noto Serif TC", serif;
+      font-size: 24px;
+      color: $dark-text;
+      text-align: center;
+      font-weight: bold;
+    }
+    .price {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      column-gap: 0.5rem;
+      color: $light-text;
+      .original-price {
+        text-decoration: line-through;
+      }
+      .offer-price {
+        font-size: 22px;
+      }
+    }
+    .overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: -100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: $secondary;
+        i {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+  .swiper {
+    position: static;
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: $white;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+    &::after {
+      font-family: "bootstrap-icons";
+      font-size: 24px;
+      color: $light-text;
+    }
+  }
+  .swiper-button-prev {
+    left: 0;
+    &::after {
+      content: "\F284";
+    }
+  }
+  .swiper-button-next {
+    right: 0;
+    &::after {
+      content: "\F285";
+    }
+  }
+}
+
+.countdown-time {
+  display: flex;
+  justify-content: center;
+  font-family: "Noto Serif TC", serif;
+  font-weight:bold;
+  margin-bottom:2.5rem;
+  .wrapper {
+    @include padding(10px, 20px);
+    background-color: $secondary;
+    color: $primary;
+    column-gap:0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > div{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      row-gap: 0.5rem;
+    }
+    .num {
+      font-size: 30px;
+    }
+  }
+}
