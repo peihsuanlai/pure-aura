@@ -69,9 +69,9 @@
                     <div class="item">
                         <span class="title">CONTACT US</span>
                         <ul class="contact-info">
-                            <li>TEL：<a href="tel:2-1234567" target="_blank">02-1234567</a></li>
+                            <li>TEL：<a href="tel:2-1234567">02-1234567</a></li>
                             <li>E-MAIL：
-                                <a href="mailto:service@pureaura.com" target="_blank">
+                                <a href="mailto:service@pureaura.com">
                                     service@pureaura.com
                                 </a>
                             </li>

@@ -1,5 +1,4 @@
 <template>
-  <main>
     <!-- 單張圖片輪播，無箭頭和分頁 -->
     <CarouselComponent
       :slides="slidesData"
@@ -139,7 +138,6 @@
         </div>
       </div>
     </section>
-  </main>
 </template>
 
 <script>

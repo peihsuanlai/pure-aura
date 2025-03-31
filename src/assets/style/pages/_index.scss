@@ -2,6 +2,10 @@
   .swiper-pagination-bullet-active {
     background: $primary;
   }
+  margin-top: 90.5px;
+  @include large {
+    margin-top: 120.5px;
+  }
 }
 
 .home-section {
@@ -25,7 +29,7 @@
     }
     span {
       position: relative;
-      background-color: $bg-gray;
+      background-color: $white;
       padding: 0.7rem 1rem;
       color: $light-text;
       font-size: 2rem;
@@ -257,17 +261,17 @@
   display: flex;
   justify-content: center;
   font-family: "Noto Serif TC", serif;
-  font-weight:bold;
-  margin-bottom:2.5rem;
+  font-weight: bold;
+  margin-bottom: 2.5rem;
   .wrapper {
     @include padding(10px, 20px);
     background-color: $secondary;
     color: $primary;
-    column-gap:0.8rem;
+    column-gap: 0.8rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    > div{
+    > div {
       display: flex;
       flex-direction: column;
       align-items: center;
