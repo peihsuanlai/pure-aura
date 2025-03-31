@@ -1,0 +1,45 @@
+.team-block {
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 60px;
+  img {
+    border-radius: 100px 0 100px 0;
+  }
+  h2 {
+    position: relative;
+    text-align: left;
+    padding-left: 16px;
+    margin-bottom: 1.5rem;
+    font-family: "Noto Serif TC", serif;
+    font-weight: bold;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background-color: $primary;
+    }
+  }
+}
+
+.gallery-list {
+  row-gap: 32px;
+  margin-bottom: 60px;
+}
+
+.contact-block {
+  h2 {
+    font-family: "Noto Serif TC", serif;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  p {
+    line-height: 1.8;
+  }
+}
+
+div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){
+  background-color:$primary !important;
+}
