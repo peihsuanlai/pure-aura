@@ -9,8 +9,8 @@
                 <span v-if="isNew">新增產品</span>
                 <span v-else>編輯產品</span>
               </h5>
-              <button type="button" class="btn-close"
-              data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn text-white"
+              data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg"></i></button>
             </div>
             <div class="modal-body">
               <div class="row">
@@ -51,7 +51,7 @@
                     </div>
                     <div v-if="!tempProduct.imagesUrl.length ||
                     tempProduct.imagesUrl[tempProduct.imagesUrl.length - 1]">
-                      <button class="btn btn-outline-secondary btn-sm d-block w-100"
+                      <button class="btn btn-outline-primary btn-sm d-block w-100"
                         @click="tempProduct.imagesUrl.push('')">
                         新增圖片
                       </button>
@@ -64,7 +64,7 @@
                     </div>
                   </div>
                   <div v-else>
-                    <button class="btn btn-outline-secondary btn-sm d-block w-100"
+                    <button class="btn btn-outline-primary btn-sm d-block w-100"
                     @click="createImages">
                       新增圖片
                     </button>
@@ -105,15 +105,21 @@
                   <hr>
 
                   <div class="mb-3">
-                    <label for="description" class="form-label">產品描述</label>
+                    <label for="description" class="form-label">簡介</label>
                     <textarea id="description" type="text" class="form-control"
-                              placeholder="請輸入產品描述" v-model="tempProduct.description">
+                    v-model="tempProduct.description">
                     </textarea>
                   </div>
                   <div class="mb-3">
-                    <label for="content" class="form-label">說明內容</label>
+                    <label for="content" class="form-label">商品介紹</label>
                     <textarea id="description" type="text" class="form-control"
-                              placeholder="請輸入說明內容" v-model="tempProduct.content">
+                     v-model="tempProduct.content">
+                    </textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="content" class="form-label">商品規格</label>
+                    <textarea id="description" type="text" class="form-control"
+                     v-model="tempProduct.spec">
                     </textarea>
                   </div>
                   <div class="row">
@@ -134,10 +140,10 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              <button type="button" class="btn btn-light" data-bs-dismiss="modal">
                 取消
               </button>
-              <button type="button" class="btn btn-primary" @click="updateData">
+              <button type="button" class="btn btn-primary text-white" @click="updateData">
                 確認
               </button>
             </div>
@@ -145,8 +151,8 @@
         </div>
     </div>
 </template>
-
 <script>
+
 import axios from 'axios';
 import { Modal } from 'bootstrap';
 
@@ -159,6 +165,7 @@ export default {
       tempProduct: {},
     };
   },
+  inject: ['emitter'],
   methods: {
     updateData() {
       let apiUrl = `${VITE_API_URL}/api/${VITE_API_PATH}/admin/product/${this.product.id}`;
@@ -167,15 +174,21 @@ export default {
         apiUrl = `${VITE_API_URL}/api/${VITE_API_PATH}/admin/product`;
         http = 'post';
       }
-      axios[http](apiUrl, { data: this.product })
+      axios[http](apiUrl, { data: this.tempProduct })
         .then(() => {
-          // console.log(res.config.data);
-          // alert(res.data.message);
           this.closeModal();
           this.$emit('update');
+          this.emitter.emit('push-message', {
+            style: 'success',
+            title: '更新成功',
+          });
         })
-        .catch(() => {
-          // alert(err.data.message);
+        .catch((err) => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '更新失敗',
+            content: err.response.data.message.join('、'),
+          });
         });
     },
     uploadFile() {
@@ -188,7 +201,6 @@ export default {
           this.tempProduct.imageUrl = res.data.imageUrl;
         })
         .catch(() => {
-          // alert(err.data.message);
         });
     },
     createImages() {
