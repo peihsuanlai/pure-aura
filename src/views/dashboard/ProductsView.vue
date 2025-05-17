@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="text-end mt-4">
-          <button class="btn btn-primary" @click="openModal('new')">
+          <button class="btn btn-primary text-white" @click="openModal('new')">
             建立新的產品
           </button>
         </div>
@@ -10,7 +10,6 @@
             <tr>
               <th width="120">分類</th>
               <th>產品名稱</th>
-              <th width="120">推薦指數</th>
               <th width="120">原價</th>
               <th width="120">售價</th>
               <th width="100">上下架</th>
@@ -19,11 +18,10 @@
           </thead>
           <tbody>
             <tr v-for="item in products" :key="item.id">
-              <td>{{item.category}}</td>
-              <td>{{item.title}}</td>
-              <td>{{item.star}}</td>
-              <td>{{item.origin_price}}</td>
-              <td>{{item.price}}</td>
+              <td v-text="item.category"></td>
+              <td v-text="item.title"></td>
+              <td v-text="$filter.currency(item.origin_price)"></td>
+              <td v-text="$filter.currency(item.price)"></td>
               <td>
                 <span class="text-success" v-if="item.is_enabled">上架</span>
                 <span v-else>下架</span>
@@ -58,8 +56,7 @@
       @update="getProducts" ref="modalProduct"
     ></ProductModal>
     <DeleteModal
-      :product="tempProduct"
-      :is-new="isNew"
+      :item="tempProduct" :type="type"
       @update="getProducts" ref="modalDelete"
     ></DeleteModal>
 </template>
@@ -75,6 +72,7 @@ const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 export default {
   data() {
     return {
+      type: 'product',
       products: [],
       tempProduct: {
         imagesUrl: [],
@@ -89,15 +87,12 @@ export default {
       axios
         .get(`${VITE_API_URL}/api/${VITE_API_PATH}/admin/products?page=${page}`)
         .then((res) => {
-          // console.log(res);
           const { products, pagination } = res.data;
           this.products = products;
           this.pagination = pagination;
           this.isLoading = false;
         })
         .catch(() => {
-          // alert(err.data.message);
-          // location.href = "index.html";
         });
     },
     openModal(isNew, item) {
@@ -107,7 +102,6 @@ export default {
         };
         this.isNew = true;
         this.$refs.modalProduct.openModal();
-        // productModal.show();
       } else if (isNew === 'edit') {
         this.tempProduct = { ...item };
         this.isNew = false;
@@ -115,7 +109,6 @@ export default {
       } else if (isNew === 'delete') {
         this.tempProduct = { ...item };
         this.$refs.modalDelete.openModal();
-        // deleteModal.show();
       }
     },
   },
