@@ -3,9 +3,7 @@ import { createPinia } from 'pinia';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 
-// import 'bootstrap/scss/bootstrap.scss';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import 'bootstrap/dist/js/bootstrap.min';
 
 import {
   Form, Field, ErrorMessage, defineRule, configure,
@@ -17,6 +15,7 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import './assets/style/all.scss';
 import App from './App.vue';
 import router from './router';
+import { currency, date } from './methods/filter';
 
 Object.keys(AllRules).forEach((rule) => {
   const ruleFunc = AllRules[rule];
@@ -34,7 +33,7 @@ configure({
 setLocale('zh_TW');
 
 const app = createApp(App);
-
+app.config.globalProperties.$filter = { currency, date };
 app.use(createPinia());
 app.use(router);
 app.component('LoadingOverlay', Loading);

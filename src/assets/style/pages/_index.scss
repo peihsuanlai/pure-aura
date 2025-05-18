@@ -2,9 +2,9 @@
   .swiper-pagination-bullet-active {
     background: $primary;
   }
-  margin-top: 90.5px;
+  margin-top: 56px;
   @include large {
-    margin-top: 120.5px;
+    margin-top: 86px;
   }
 }
 
@@ -156,72 +156,6 @@
   background-color: $white;
   .title span {
     background-color: $white;
-  }
-  .product-list {
-    @include padding(0, 32px);
-    position: relative;
-    .item {
-      width: 100%;
-      &:hover {
-        .overlay {
-          top: 0;
-          transition: all 0.3s ease-in-out;
-        }
-      }
-    }
-    .img {
-      width: 100%;
-      padding-bottom: 80%;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-      margin-bottom: 0.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    h4 {
-      font-family: "Noto Serif TC", serif;
-      font-size: 24px;
-      color: $dark-text;
-      text-align: center;
-      font-weight: bold;
-    }
-    .price {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      column-gap: 0.5rem;
-      color: $light-text;
-      .original-price {
-        text-decoration: line-through;
-      }
-      .offer-price {
-        font-size: 22px;
-      }
-    }
-    .overlay {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: -100%;
-      background-color: rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease-in-out;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      span {
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-        text-align: center;
-        border-radius: 50%;
-        background-color: $secondary;
-        i {
-          font-size: 24px;
-        }
-      }
-    }
   }
   .swiper {
     position: static;

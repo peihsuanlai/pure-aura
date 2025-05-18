@@ -1,17 +1,5 @@
 <template>
     <section class="navbar-container">
-        <ul class="container-fluid top">
-            <li>
-                <RouterLink to="/cart">
-                    <i class="bi bi-cart3"></i>購物車
-                </RouterLink>
-            </li>
-            <li>
-                <RouterLink to="/login">
-                    <i class="bi bi-person-circle"></i>會員中心
-                </RouterLink>
-            </li>
-        </ul>
         <nav class="navbar navbar-expand-lg container-lg align-items-center">
             <RouterLink class="d-lg-none ps-2" to="/">
                 <h1 class="logo"
@@ -26,14 +14,20 @@
             <div class="navbarMenu">
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/products" id="nav-about">
+                        <RouterLink class="nav-link"
+                         :class="{ active: !$route.query.category && $route.path === '/products' }"
+                        to="/products">
                             全系列商品</RouterLink>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/" id="nav-news">放鬆解壓</a>
+                     <li class="nav-item">
+                        <RouterLink class="nav-link"
+                        :class="{ active: $route.query.category === '天然の香' }"
+                        :to="{ name: 'Products', query: { category: '天然の香' }  }">天然の香</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/" id="nav-system">天然の香</a>
+                        <RouterLink class="nav-link"
+                        :class="{ active: $route.query.category === '舒壓放鬆' }"
+                        :to="{ name: 'Products', query: { category: '舒壓放鬆' }  }">舒壓放鬆</RouterLink>
                     </li>
                     <li class="nav-item d-none d-lg-block">
                         <RouterLink class="nav-link" to="/">
@@ -42,13 +36,17 @@
                         </RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/about" id="nav-solution">關於我們</RouterLink>
+                        <RouterLink class="nav-link"
+                        :class="{ active: $route.query.category === '質感提案' }"
+                        :to="{ name: 'Products', query: { category: '質感提案' }  }">質感提案</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/" id="nav-business">銷售據點</a>
+                        <RouterLink class="nav-link" to="/about"
+                        :class="{ active: $route.path === '/about' }">關於我們</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/faq" id="nav-faq">常見問題</RouterLink>
+                        <RouterLink class="nav-link" to="/faq"
+                        :class="{ active: $route.path === '/faq' }">常見問題</RouterLink>
                     </li>
                 </ul>
             </div>
@@ -103,9 +101,16 @@
             </div>
         </div>
         <div class="container-lg bottom">
+            <div>所有資料、圖片來源皆取自網路，僅作為個人學習與作品製作之用。</div>
             <div>
                 Copyright @ PURE AURA 草本心語股份有限公司 All rights reserved. <a href="/">隱私權政策</a>
             </div>
         </div>
     </footer>
+    <div class="cart-btn">
+        <RouterLink to="/cart" class="action">
+            <span class="num">1</span>
+            <i class="bi bi-cart-check"></i>
+        </RouterLink>
+    </div>
 </template>

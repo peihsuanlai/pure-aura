@@ -23,13 +23,13 @@
           <div
             class="col-sm-6 col-lg-4"
             v-for="(item, index) in categoryData"
-            :key="'cateory' + index"
+            :key="'category' + index"
           >
-            <a
-              :href="item.link"
+            <RouterLink
+              :to="item.link"
               class="item"
               :style="{ backgroundImage: `url(${item.src})` }"
-            ></a>
+            ></RouterLink>
           </div>
         </div>
       </div>
@@ -91,50 +91,30 @@
               992: { slidesPerView: 3, spaceBetween: 20 }
             }">
             <template v-slot:default="{ item }">
-              <a href="###" class="item">
+              <RouterLink :to="{ name: 'Product', params: { id: item.id } }" class="item">
                     <div
                       class="img"
                       :style="{ backgroundImage: `url(${item.imageUrl})` }"
                     >
                       <div class="overlay">
-                        <span><i class="bi bi-cart3"></i></span>
+                        <div>查看細節</div>
                       </div>
                     </div>
                     <h4 v-text="item.title"></h4>
                     <div class="price">
                       <span
                         class="original-price"
-                        v-text="'NT$' + item.origin_price"
+                        v-text="'NT$' + $filter.currency(item.origin_price)"
                       ></span>
-                      <span class="offer-price" v-text="'NT$' + item.price"></span>
+                      <span class="offer-price"
+                      v-text="'NT$' + $filter.currency(item.price)"></span>
                     </div>
-                </a>
+              </RouterLink>
+              <button type="button" class="add-btn" @click="addToCart(item.id)">
+                <i class="bi bi-cart3"></i> 加入購物車
+              </button>
             </template>
           </CarouselComponent>
-          <!-- <div
-            class="col-sm-6 col-lg-4"
-            v-for="(item, index) in saleProduct"
-            :key="'product' + index"
-          >
-            <a href="###" class="item">
-              <div
-                class="img"
-                :style="{ backgroundImage: `url(${item.imageUrl})` }"
-              >
-                <div class="overlay">
-                  <span><i class="bi bi-cart3"></i></span>
-                </div>
-              </div>
-              <h4 v-text="item.title"></h4>
-              <div class="price">
-                <span
-                  class="original-price"
-                  v-text="'NT$' + item.origin_price"
-                ></span>
-                <span class="offer-price" v-text="'NT$' + item.price"></span>
-              </div>
-            </a>
-          </div> -->
         </div>
       </div>
     </section>
@@ -142,6 +122,7 @@
 
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import CarouselComponent from '../components/CarouselComponent.vue';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
@@ -168,15 +149,15 @@ export default {
       categoryData: [
         {
           src: '/images/category1.png',
-          link: '',
+          link: { name: 'Products', query: { category: '質感提案' } },
         },
         {
           src: '/images/category2.png',
-          link: '',
+          link: { name: 'Products', query: { category: '天然の香' } },
         },
         {
           src: '/images/category3.png',
-          link: '',
+          link: { name: 'Products', query: { category: '舒壓放鬆' } },
         },
       ],
       brand: {
@@ -242,6 +223,24 @@ export default {
     },
     getImage(item) {
       return this.isMobile ? item.mobileSrc : item.src;
+    },
+    addToCart(id, qty = 1) {
+      const cart = {
+        product_id: id,
+        qty,
+      };
+      axios
+        .post(`${VITE_API_URL}/api/${VITE_API_PATH}/cart`, { data: cart })
+        .then(() => {
+          Swal.fire({
+            title: '商品已加入購物車',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        })
+        .catch(() => {
+        });
     },
   },
   computed: {

@@ -57,7 +57,7 @@ a {
 }
 
 .page-banner {
-  margin-top: 90.5px;
+  margin-top: 56px;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -68,7 +68,7 @@ a {
     padding-bottom: 30%;
   }
   @include large {
-    margin-top: 120.5px;
+    margin-top: 86px;
     padding-bottom: 25%;
   }
   @include screen {
@@ -102,6 +102,21 @@ a {
     @include xlarge {
       height: 15%;
     }
+  }
+}
+
+.no-banner {
+  margin-top: 56px;
+  position: relative;
+  @include large {
+    margin-top: 86px;
+  }
+  h2{
+    font-size: 2rem;
+    margin-bottom: 40px;
+    font-family: "Noto Serif TC", serif;
+    font-weight: bold;
+    text-align:center;
   }
 }
 
@@ -274,20 +289,104 @@ main {
   }
 }
 
-ul.page {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 0;
-  list-style: none;
-  padding-left: 0;
-  margin-top: 3.5rem;
-  a {
-    color: $light-text;
-    @include padding(4px, 10px);
-    &.active {
-      color: $white;
-      background-color: $primary;
+.product-list {
+  @include padding(0, 32px);
+  position: relative;
+  .item {
+    width: 100%;
+    &:hover {
+      .overlay {
+        top: 0;
+        transition: all 0.3s ease-in-out;
+      }
     }
+  }
+  .img {
+    width: 100%;
+    padding-bottom: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  h4 {
+    font-family: "Noto Serif TC", serif;
+    font-size: 24px;
+    color: $dark-text;
+    text-align: center;
+    font-weight: bold;
+  }
+  .price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.5rem;
+    color: $light-text;
+    margin-bottom:0.8rem;
+    .original-price {
+      text-decoration: line-through;
+    }
+    .offer-price {
+      font-size: 22px;
+    }
+  }
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: -100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    @include padding(10px,10px);
+    div {
+      @include padding(10px,10px);
+      text-align: center;
+      background-color: $white;
+      color:$primary;
+      width:100%;
+    }
+  }
+  .add-btn{
+    border:1px solid $primary;
+    color:$primary;
+    @include padding(6px,8px);
+    background-color:$white;
+    display:block;
+    margin: 0 auto;
+  }
+}
+
+.page-item{
+  &:not(.active){
+    .page-link{
+      background-color:transparent;
+      border-radius: 0;
+      border:none;
+    }
+  }
+} 
+
+.number-box{
+  display:flex;
+  button{
+      background-color:$white;
+      border:1px solid $primary;
+      color:$primary;
+      @include padding(4px,8px);
+  }
+  span{
+      width:40px;
+      text-align: center;
+      @include padding(4px,4px);
+      background-color:$white;
+      border-top:1px solid $primary;
+      border-bottom:1px solid $primary;
   }
 }
 
@@ -296,7 +395,7 @@ ul.page {
   background-color: $primary;
   @include padding(8px, 32px);
   transition: all 0.3s ease-in-out;
-  outline: 2px solid $primary;
+  border: 2px solid $primary;
   &:hover {
     color: $primary;
     background-color: transparent;
@@ -304,21 +403,14 @@ ul.page {
   }
 }
 
-
-
-.cms-page {
-  padding-top: 8rem;
-  min-height: 71vh;
-  h2 {
-    color: $dark-text;
-  }
+div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){
+  background-color:$primary !important;
 }
 
-.back-btn {
-  color: $light-text;
-  transition: all 0.3s ease-in-out;
-  &:hover {
-    color: $primary;
-    transition: all 0.3s ease-in-out;
-  }
+div:where(.swal2-container) h2:where(.swal2-title) {
+  padding-bottom:24px !important;
+}
+
+div:where(.swal2-container) div:where(.swal2-actions){
+  margin:0 !important;
 }
