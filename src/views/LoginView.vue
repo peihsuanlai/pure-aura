@@ -1,35 +1,33 @@
 <template>
-    <div class="container">
-          <div class="row justify-content-center">
-            <h1 class="h3 mb-3 font-weight-normal">
-              請先登入
-            </h1>
-            <div class="col-10">
-              <form id="form" class="form-signin" @submit.prevent="login">
-                <div class="form-floating mb-3">
-                  <input type="email" class="form-control" id="username"
-                    placeholder="name@example.com" required autofocus v-model="user.username">
-                  <label for="username">Email address</label>
-                </div>
-                <div class="form-floating">
-                  <input type="password" class="form-control" id="password"
-                    placeholder="Password" required v-model="user.password">
-                  <label for="password">Password</label>
-                </div>
-                <button class="btn btn-lg btn-primary w-100 mt-3" type="submit">
-                  登入
-                </button>
-              </form>
-            </div>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-6">
+            <p class="h3 mb-3">登入</p>
+            <form id="form" class="form-signin" @submit.prevent="login">
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="username"
+                 required autofocus v-model="user.username">
+                <label for="username">帳號(Email)</label>
+              </div>
+              <div class="form-floating">
+                <input type="password" class="form-control"
+                id="password" required v-model="user.password">
+                <label for="password">密碼</label>
+              </div>
+              <button class="btn btn-lg btn-primary text-white w-100 mt-3" type="submit">
+                登入
+              </button>
+            </form>
           </div>
-          <p class="mt-5 mb-3 text-muted">
-            &copy; 2021~∞ - 六角學院
-          </p>
         </div>
+      </div>
+      <ToastMessage></ToastMessage>
 </template>
 
 <script>
 import axios from 'axios';
+import emitter from '@/methods/emitter';
+import ToastMessage from '@/components/ToastMessage.vue';
 
 const { VITE_API_URL } = import.meta.env;
 export default {
@@ -41,19 +39,27 @@ export default {
       },
     };
   },
+  components: {
+    ToastMessage,
+  },
+  provide() {
+    return {
+      emitter,
+    };
+  },
   methods: {
     login() {
       axios.post(`${VITE_API_URL}/admin/signin`, this.user)
         .then((res) => {
-        // console.log(res.data);
           const { token, expired } = res.data;
-          // console.log(token);
           document.cookie = `myToken=${token}; expires=${new Date(expired)}`;
           this.$router.push('/admin/products');
-          // window.location.href = 'productList.html';
         })
         .catch(() => {
-          // window.alert(err.data.message);
+          emitter.emit('push-message', {
+            style: 'danger',
+            title: '登入失敗',
+          });
           this.user.username = '';
           this.user.password = '';
         });
