@@ -70,10 +70,9 @@ footer {
     }
   }
   .bottom {
-    text-align: center;
+    display:flex;
+    justify-content: space-between;
+    flex-wrap:wrap;
     font-size: 14px;
-    @include medium {
-      text-align: end;
-    }
   }
 }

@@ -125,11 +125,7 @@ export default {
       Swal.fire({
         title: '您的留言已送出',
         icon: 'success',
-        showConfirmButton: false,
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
     },
   },
 };

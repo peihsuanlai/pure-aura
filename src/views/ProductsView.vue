@@ -1,120 +1,156 @@
 <template>
-    <div class="container">
-          <div class="row py-3">
-            <div class="col-md-6">
-              <h2>產品列表</h2>
-              <table class="table table-hover mt-4">
-                <thead>
-                  <tr>
-                    <th width="150">產品名稱</th>
-                    <th width="120">
-                      原價
-                    </th>
-                    <th width="120">
-                      售價
-                    </th>
-                    <th width="150">
-                      是否啟用
-                    </th>
-                    <th width="120">
-                      查看細節
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="item in products" :key="item.id">
-                    <td width="150">{{item.title}}</td>
-                    <td width="120">
-                      {{item.origin_price}}
-                    </td>
-                    <td width="120">
-                      {{item.price}}
-                    </td>
-                    <td width="150">
-                      <span class="text-success" v-if="item.is_enabled===1">啟用</span>
-                      <span v-else>未啟用</span>
-                    </td>
-                    <td width="120">
-                      <button type="button" class="btn btn-primary"
-                      @click="showProduct(item.id)">查看細節</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <p>目前有<span>{{productLength}}</span>項產品</p>
-              <LoadingOverlay v-model:active="isLoading"/>
-            </div>
-            <div class="col-md-6">
-              <h2>單一產品細節</h2>
-              <template v-if="temp.title">
-                <div class="card mb-3">
-                  <img :src="temp.imageUrl" class="card-img-top primary-image" alt="主圖">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      {{temp.title}}
-                      <span class="badge bg-primary ms-2">{{temp.category}}</span>
-                    </h5>
-                    <p class="card-text">商品描述：{{temp.description}}</p>
-                    <p class="card-text">商品內容：{{temp.content}}</p>
-                    <div class="d-flex">
-                      <p class="card-text me-2">{{temp.price}}</p>
-                      <p class="card-text text-secondary"><del>{{temp.origin_price}}</del></p>
-                      元 / {{temp.unit}}
-                    </div>
-                  </div>
-                </div>
-                <template v-for="(item,index) in temp.imagesUrl" :key="'image'+index">
-                  <img :src="item" alt="" class="w-100 my-2">
-                </template>
-              </template>
-              <p class="text-secondary" v-else>請選擇一個商品查看</p>
-            </div>
+   <section style="background-image:url('/images/product-banner.png')" class="page-banner">
+    <h2>全系列商品</h2>
+  </section>
+  <main>
+    <div class="container-lg">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">首頁</a></li>
+          <li class="breadcrumb-item">
+            <RouterLink to="/products">全系列商品</RouterLink></li>
+          <li class="breadcrumb-item active" aria-current="page" v-text="currentCategory"></li>
+        </ol>
+      </nav>
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="left-menu mb-4 mb-lg-0">
+            <a href="#" class="menu-switch" @click.prevent="toggleMenu">分類
+              <i class="bi bi-chevron-right arrow-icon"
+              :class="[isRotated ? 'rotate' :'']"></i></a>
+            <ul class="mb-0 list-unstyled menu-list d-lg-block"
+            :class="[isMenuVisible ? 'd-none' :'']">
+              <li>
+                <a href="#" @click.prevent="getProducts(1)"
+                :class="{'active' : currentCategory === '全系列商品'}">全系列商品</a>
+              </li>
+              <li v-for="(item, index) in menu" :key="'category'+ (index+1)">
+                <a href="#" :class="{'active' : currentCategory === item}"
+                v-text="item" @click.prevent="getProducts(1, item)"></a>
+              </li>
+            </ul>
           </div>
         </div>
+        <div class="col-lg-9 product-page">
+          <div class="row product-list mb-5">
+            <div class="col-sm-6 col-lg-4" v-for="item in products" :key="item.id">
+              <RouterLink :to="{ name: 'Product', params: { id: item.id } }" class="item">
+                    <div
+                      class="img"
+                      :style="{ backgroundImage: `url(${item.imageUrl})` }"
+                    >
+                      <div class="overlay">
+                        <div>查看細節</div>
+                      </div>
+                    </div>
+                    <h4 v-text="item.title"></h4>
+                    <div class="price">
+                      <span
+                        class="original-price"
+                        v-text="'NT$' + $filter.currency(item.origin_price)"
+                      ></span>
+                      <span class="offer-price" v-text="'NT$' + $filter.currency(item.price)">
+                      </span>
+                    </div>
+              </RouterLink>
+              <button type="button" class="add-btn" @click="addToCart(item.id)">
+                <i class="bi bi-cart3"></i> 加入購物車
+              </button>
+            </div>
+          </div>
+          <PaginationComponent :pages="pagination" @switch-page="getProducts"></PaginationComponent>
+        </div>
+      </div>
+    </div>
+    <LoadingOverlay v-model:active="isLoading"/>
+  </main>
 </template>
 
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import PaginationComponent from '../components/PaginationComponent.vue';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 export default {
   data() {
     return {
+      isMenuVisible: true,
+      isRotated: false,
+      menu: [],
+      currentCategory: '全系列商品',
       products: [],
-      temp: {},
+      pagination: {},
       isLoading: true,
     };
   },
   methods: {
-    getProducts() {
+    getCategory() {
       axios
         .get(`${VITE_API_URL}/api/${VITE_API_PATH}/products/all`)
         .then((res) => {
           this.products = res.data.products;
           this.isLoading = false;
+          const categoryList = [];
+          res.data.products.forEach((item) => {
+            const trimmedCate = item.category.trim();
+            if (!categoryList.includes(trimmedCate)) {
+              categoryList.push(trimmedCate);
+              this.menu = categoryList;
+            }
+          });
         })
         .catch(() => {
-          // alert(err.data.message);
         });
     },
-    showProduct(id) {
+    getProducts(page = 1, category = '') {
+      this.isLoading = true;
       axios
-        .get(`${VITE_API_URL}/api/${VITE_API_PATH}/product/${id}`)
+        .get(`${VITE_API_URL}/api/${VITE_API_PATH}/products?category=${category}&page=${page}`)
         .then((res) => {
-          this.temp = res.data.product;
+          const { products, pagination } = res.data;
+          this.products = products;
+          this.pagination = pagination;
+          this.currentCategory = category || '全系列商品';
+          this.isLoading = false;
         })
         .catch(() => {
-          // alert(err.data.message);
+        });
+    },
+    addToCart(id, qty = 1) {
+      const cart = {
+        product_id: id,
+        qty,
+      };
+      axios
+        .post(`${VITE_API_URL}/api/${VITE_API_PATH}/cart`, { data: cart })
+        .then(() => {
+          Swal.fire({
+            title: '商品已加入購物車',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        })
+        .catch(() => {
         });
     },
   },
-  computed: {
-    productLength() {
-      return Object.keys(this.products).length;
+  watch: {
+    '$route.query.category': {
+      handler(newCategory) {
+        this.getProducts(1, newCategory || '');
+      },
     },
+  },
+  components: {
+    PaginationComponent,
   },
   mounted() {
-    this.getProducts();
+    this.getCategory();
+  },
+  created() {
+    this.getProducts(1, this.$route.query.category || '');
   },
 };
 </script>

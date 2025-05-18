@@ -3,9 +3,9 @@
 
 @import './helpers/variables';
 
-@import "../../../node_modules/bootstrap/scss/mixins";
+@import "bootstrap/scss/mixins";
 @import './helpers/fsutility';
-@import "../../../node_modules/bootstrap";
+@import "bootstrap/scss/bootstrap";
 
 @import './helpers/mixins';
 @import './helpers/base';
@@ -17,3 +17,5 @@
 @import './pages/index';
 @import './pages/faq';
 @import './pages/about';
+@import './pages/product';
+@import './pages/cart';

@@ -39,7 +39,3 @@
     line-height: 1.8;
   }
 }
-
-div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){
-  background-color:$primary !important;
-}
