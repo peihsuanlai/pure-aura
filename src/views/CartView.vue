@@ -55,7 +55,7 @@
                 </tr>
             </thead>
             <tbody>
-                <template v-if="cart?.carts?.length > 0">
+                <template v-if="cart.carts?.length > 0">
                   <tr v-for="item in cart.carts" :key="item.id">
                       <td data-th="圖片"><div class="img"
                         :style="{ backgroundImage: `url(${item.product.imageUrl})` }"></div></td>
@@ -219,13 +219,15 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { mapActions, mapState } from 'pinia';
+import cartStore from '../stores/cartStore';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 export default {
   data() {
     return {
-      cart: {},
-      isLoading: true,
+      // cart: {},
+      // isLoading: true,
       loadingStatus: {
         loadingItem: '',
       },
@@ -266,17 +268,17 @@ export default {
         .catch(() => {
         });
     },
-    getCart() {
-      this.isLoading = true;
-      axios
-        .get(`${VITE_API_URL}/api/${VITE_API_PATH}/cart`)
-        .then((res) => {
-          this.isLoading = false;
-          this.cart = res.data.data;
-        })
-        .catch(() => {
-        });
-    },
+    // getCart() {
+    //   this.isLoading = true;
+    //   axios
+    //     .get(`${VITE_API_URL}/api/${VITE_API_PATH}/cart`)
+    //     .then((res) => {
+    //       this.isLoading = false;
+    //       this.cart = res.data.data;
+    //     })
+    //     .catch(() => {
+    //     });
+    // },
     deleteProduct(id) {
       Swal.fire({
         title: '確定刪除此商品？',
@@ -344,11 +346,13 @@ export default {
       const phoneNumber = /^(09)[0-9]{8}$/;
       return phoneNumber.test(value) ? true : '請輸入正確的電話號碼';
     },
+    ...mapActions(cartStore, ['getCart']),
   },
   computed: {
     discount() {
       return this.cart.total - this.cart.final_total;
     },
+    ...mapState(cartStore, ['cart', 'isLoading']),
   },
   mounted() {
     this.getCart();
