@@ -2,9 +2,9 @@
   .swiper-pagination-bullet-active {
     background: $primary;
   }
-  margin-top: 56px;
+  margin-top: 87.5px;
   @include large {
-    margin-top: 86px;
+    margin-top: 117.5px;
   }
 }
 
@@ -38,7 +38,27 @@
   }
 }
 
-.catrgory-list {
+.category-container {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  &::before {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    background-image: url("/images/shape-right.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 555px;
+    height: 555px;
+    top: -300px;
+    left: -180px;
+    animation: shapeMove 15s linear infinite;
+  }
+}
+
+.category-list {
   row-gap: 1.5rem;
   justify-content: center;
   .item {

@@ -1,5 +1,11 @@
 <template>
     <section class="navbar-container">
+        <div class="news-carousel">
+            <div class="item" @animationend="getNewIndex" :key="currentIndex">
+                <span v-text="currentItem.date"></span>
+                <p class="mb-0" v-text="currentItem.text"></p>
+            </div>
+        </div>
         <nav class="navbar navbar-expand-lg container-lg align-items-center">
             <RouterLink class="d-lg-none ps-2" to="/">
                 <h1 class="logo"
@@ -54,7 +60,7 @@
     </section>
     <RouterView></RouterView>
     <footer>
-        <div class="container-lg mb-5">
+        <div class="container-lg mb-3">
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-lg-5">
                     <div class="item">
@@ -101,16 +107,74 @@
             </div>
         </div>
         <div class="container-lg bottom">
-            <div>所有資料、圖片來源皆取自網路，僅作為個人學習與作品製作之用。</div>
+            <div>所有圖片均取自<a href="https://unsplash.com/">Unsplash</a> ，僅作為個人學習與作品製作之用。</div>
             <div>
-                Copyright @ PURE AURA 草本心語股份有限公司 All rights reserved. <a href="/">隱私權政策</a>
+                Copyright @ 2023 PURE AURA Inc. All rights reserved. <a href="/">隱私權政策</a>
             </div>
         </div>
     </footer>
     <div class="cart-btn">
         <RouterLink to="/cart" class="action">
-            <span class="num">1</span>
+            <span class="num" :class="{ bounce: isBouncing }" v-text="cart.carts?.length"></span>
             <i class="bi bi-cart-check"></i>
         </RouterLink>
     </div>
 </template>
+<script>
+import { mapState, mapActions } from 'pinia';
+import cartStore from '../stores/cartStore';
+
+export default {
+  data() {
+    return {
+      isBouncing: false,
+      currentIndex: 0,
+      news: [
+        {
+          date: '2025-05-20',
+          text: '開幕慶~~結帳輸入折扣碼 「happy520」，立即享九折優惠',
+        },
+        {
+          date: '2025-06-12',
+          text: '開幕慶期間，多項商品享優惠價格，結帳輸入折扣碼可再打折！',
+        },
+      ],
+      bounceTimer: null,
+    };
+  },
+  computed: {
+    ...mapState(cartStore, ['cart']),
+    currentItem() {
+      return this.news[this.currentIndex];
+    },
+  },
+  methods: {
+    ...mapActions(cartStore, ['getCart', 'addToCart']),
+    // 上方跑馬燈動畫結束需重新獲得新index
+    getNewIndex() {
+      this.currentIndex = (this.currentIndex + 1) % this.news.length;
+    },
+  },
+  watch: {
+    // 監聽購物車數量以變動isBouncing，產生彈跳效果
+    'cart.carts.length': {
+      handler(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.isBouncing = true;
+          clearTimeout(this.bounceTimer);
+          this.bounceTimer = setTimeout(() => {
+            this.isBouncing = false;
+          }, 500);
+        }
+      },
+    },
+  },
+  beforeUnmount() {
+    clearTimeout(this.bounceTimer);
+  },
+  mounted() {
+    this.getCart();
+    this.getNewIndex();
+  },
+};
+</script>
