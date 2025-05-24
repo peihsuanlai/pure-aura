@@ -130,11 +130,6 @@
                       <label class="form-check-label" for="is_enabled">是否上架</label>
                     </div>
                   </div>
-                  <div class="mb-3 col-md-6">
-                      <label class="form-label" for="star">網友推薦指數</label>
-                      <input id="star" class="form-control" type="text" v-model="tempProduct.star">
-                  </div>
-
                 </div>
                 </div>
               </div>
