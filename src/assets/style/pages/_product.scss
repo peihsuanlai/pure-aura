@@ -43,14 +43,20 @@
   }
   div.des {
     line-height: 1.8;
-    margin-bottom:40px;
+    margin-bottom:20px;
+    @include large{
+      margin-bottom:40px;
+    }
   }
   .price {
     display: flex;
     align-items: center;
     column-gap: 0.5rem;
     font-size:20px;
-    margin-bottom:40px;
+    margin-bottom:20px;
+    @include large{
+      margin-bottom:40px;
+    }
     .original-price {
       text-decoration: line-through;
     }
@@ -154,8 +160,11 @@
 }
 
 .tabcontent{
-    width:50%;
+    width:80%;
     margin:0 auto;
     text-align:center;
     @include padding(40px,0);
+    @include large{
+       width:50%;
+    }
 }

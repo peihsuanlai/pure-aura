@@ -57,7 +57,7 @@ a {
 }
 
 .page-banner {
-  margin-top: 87.5px;
+  margin-top: 85px;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -68,7 +68,7 @@ a {
     padding-bottom: 30%;
   }
   @include large {
-    margin-top: 117.5px;
+    margin-top: 118px;
     padding-bottom: 25%;
   }
   @include screen {
@@ -106,10 +106,10 @@ a {
 }
 
 .no-banner {
-  margin-top: 56px;
+  margin-top: 85px;
   position: relative;
   @include large {
-    margin-top: 86px;
+    margin-top: 118px;
   }
   h2{
     font-size: 2rem;
@@ -124,6 +124,7 @@ a {
   background-color: transparent;
   padding: 0;
   color: $light-text;
+  font-size:14px;
   a {
     color: $light-text;
   }

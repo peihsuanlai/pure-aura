@@ -36,8 +36,11 @@ footer {
     }
   }
   img {
-    width: 120px;
+    width: 80px;
     object-fit: cover;
+    @include large{
+      width:100px;
+    }
   }
   .contact-info,
   .social-icons {
