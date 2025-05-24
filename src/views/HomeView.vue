@@ -2,24 +2,20 @@
     <!-- 單張圖片輪播，無箭頭和分頁 -->
     <CarouselComponent
       :slides="slidesData"
-      :slidesPerView="1"
       :spaceBetween="0"
-      :loop="true"
-      :autoplay="{ delay: 3000, disableOnInteraction: true }"
       :navigation="false"
-      :pagination="true"
       class="home-banner"
     >
       <template v-slot:default="{ item }">
         <img :src="getImage(item)" :alt="item.alt" />
       </template>
     </CarouselComponent>
-    <section class="catrgory-container home-section">
+    <section class="category-container home-section">
       <div class="container">
         <h2 class="title">
           <span v-text="titles.brandSelect"></span>
         </h2>
-        <div class="row catrgory-list">
+        <div class="row category-list">
           <div
             class="col-sm-6 col-lg-4"
             v-for="(item, index) in categoryData"
@@ -85,11 +81,10 @@
           </div>
         <div class="row product-list">
           <CarouselComponent :slides="saleProduct" :slidesPerView="1"
-            :spaceBetween="0" :loop="false" :autoplay="false" :navigation="true"
+            :spaceBetween="0" :loop="false" :autoplay="false"
             :pagination="false" :breakpoints="{
               576: { slidesPerView: 2, spaceBetween: 20 },
-              992: { slidesPerView: 3, spaceBetween: 20 }
-            }">
+              992: { slidesPerView: 3, spaceBetween: 20 }}">
             <template v-slot:default="{ item }">
               <RouterLink :to="{ name: 'Product', params: { id: item.id } }" class="item">
                     <div
@@ -122,7 +117,8 @@
 
 <script>
 import axios from 'axios';
-import Swal from 'sweetalert2';
+import { mapActions } from 'pinia';
+import cartStore from '../stores/cartStore';
 import CarouselComponent from '../components/CarouselComponent.vue';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
@@ -224,24 +220,25 @@ export default {
     getImage(item) {
       return this.isMobile ? item.mobileSrc : item.src;
     },
-    addToCart(id, qty = 1) {
-      const cart = {
-        product_id: id,
-        qty,
-      };
-      axios
-        .post(`${VITE_API_URL}/api/${VITE_API_PATH}/cart`, { data: cart })
-        .then(() => {
-          Swal.fire({
-            title: '商品已加入購物車',
-            icon: 'success',
-            timer: 1500,
-            showConfirmButton: false,
-          });
-        })
-        .catch(() => {
-        });
-    },
+    ...mapActions(cartStore, ['addToCart']),
+    // addToCart(id, qty = 1) {
+    //   const cart = {
+    //     product_id: id,
+    //     qty,
+    //   };
+    //   axios
+    //     .post(`${VITE_API_URL}/api/${VITE_API_PATH}/cart`, { data: cart })
+    //     .then(() => {
+    //       Swal.fire({
+    //         title: '商品已加入購物車',
+    //         icon: 'success',
+    //         timer: 1500,
+    //         showConfirmButton: false,
+    //       });
+    //     })
+    //     .catch(() => {
+    //     });
+    // },
   },
   computed: {
     isMobile() {
@@ -261,5 +258,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

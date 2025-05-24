@@ -11,7 +11,6 @@
   >
     <SwiperSlide v-for="(item, index) in slides" :key="index">
       <slot :item="item"></slot>
-      <!-- <img :src="item.src" :alt="item.alt" /> -->
     </SwiperSlide>
   </Swiper>
 </template>
@@ -50,7 +49,7 @@ export default {
       type: [Object, Boolean],
       default: () => ({
         delay: 3000, // 3 秒自動播放
-        disableOnInteraction: true, //
+        disableOnInteraction: true,
       }),
     },
     navigation: {
