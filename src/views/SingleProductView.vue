@@ -65,7 +65,8 @@
 
 <script>
 import axios from 'axios';
-import Swal from 'sweetalert2';
+import { mapActions } from 'pinia';
+import cartStore from '../stores/cartStore';
 import ProductImageCarousel from '../components/ProductImageCarousel.vue';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
@@ -73,6 +74,7 @@ export default {
   data() {
     return {
       product: {},
+      productId: null,
       contentType: 'intro',
       productNum: 1,
       isLoading: true,
@@ -89,35 +91,39 @@ export default {
         this.productNum += 1;
       }
     },
-    addToCart(id, qty = 1) {
-      const cart = {
-        product_id: id,
-        qty,
-      };
-      axios
-        .post(`${VITE_API_URL}/api/${VITE_API_PATH}/cart`, { data: cart })
-        .then(() => {
-          Swal.fire({
-            title: '商品已加入購物車',
-            icon: 'success',
-            timer: 1500,
-            showConfirmButton: false,
-          });
+    getProduct(id) {
+      axios.get(`${VITE_API_URL}/api/${VITE_API_PATH}/product/${id}`)
+        .then((res) => {
+          this.isLoading = false;
+          this.product = res.data.product;
         })
         .catch(() => {
         });
     },
+    // addToCart(id, qty = 1) {
+    //   const cart = {
+    //     product_id: id,
+    //     qty,
+    //   };
+    //   axios
+    //     .post(`${VITE_API_URL}/api/${VITE_API_PATH}/cart`, { data: cart })
+    //     .then(() => {
+    //       Swal.fire({
+    //         title: '商品已加入購物車',
+    //         icon: 'success',
+    //         timer: 1500,
+    //         showConfirmButton: false,
+    //       });
+    //     })
+    //     .catch(() => {
+    //     });
+    // },
+    ...mapActions(cartStore, ['addToCart']),
   },
   components: { ProductImageCarousel },
   mounted() {
-    const { id } = this.$route.params;
-    axios.get(`${VITE_API_URL}/api/${VITE_API_PATH}/product/${id}`)
-      .then((res) => {
-        this.isLoading = false;
-        this.product = res.data.product;
-      })
-      .catch(() => {
-      });
+    this.productId = this.$route.params.id;
+    this.getProduct(this.productId);
   },
 };
 </script>
