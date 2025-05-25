@@ -2,31 +2,47 @@
   .product-list {
     row-gap: 24px;
   }
+  .left-menu, .menu-list-container {
+    @include padding(0, 32px);
+    @include large{
+      padding:0;
+    }
+  }
+  .menu-list-container{
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left:0;
+    z-index: 1;
+    .menu-list{
+      position:static;
+    }
+  }
 }
 
 .single-product-page {
   .row.top {
-    row-gap: 20px;
+    row-gap: 24px;
     background-color: transparent;
-    > div:first-child{
-        position:relative;
-        &::before {
-            content: "";
-            position: absolute;
-            width: 150%;
-            height: 360px;
-            background-image: linear-gradient(
-              90deg,
-              rgba(128, 157, 60, 0.7),
-              rgba(128, 157, 60, 0.3)
-            );
-            right:-10%;
-            top: 35%;
-            display: none;
-            @include large {
-              display: block;
-            }
-          }
+    > div:first-child {
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        width: 150%;
+        height: 360px;
+        background-image: linear-gradient(
+          90deg,
+          rgba(128, 157, 60, 0.7),
+          rgba(128, 157, 60, 0.3)
+        );
+        right: -10%;
+        top: 35%;
+        display: none;
+        @include large {
+          display: block;
+        }
+      }
     }
   }
   h4 {
@@ -37,32 +53,44 @@
     margin-bottom: 20px;
     font-family: "Noto Serif TC", serif;
     font-weight: bold;
-    font-size:36px;
+    font-size: 24px;
     padding-bottom: 20px;
     border-bottom: 1px solid $light-text;
+    @include large {
+      font-size: 36px;
+    }
   }
   div.des {
     line-height: 1.8;
-    margin-bottom:20px;
-    @include large{
-      margin-bottom:40px;
+    margin-bottom: 20px;
+    @include large {
+      margin-bottom: 40px;
     }
   }
-  .price {
+  .top-price {
     display: flex;
     align-items: center;
     column-gap: 0.5rem;
-    font-size:20px;
-    margin-bottom:20px;
-    @include large{
-      margin-bottom:40px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    @include large {
+      margin-bottom: 40px;
     }
     .original-price {
       text-decoration: line-through;
     }
     .offer-price {
       font-size: 30px;
-      font-weight:500;
+      font-weight: 500;
+    }
+  }
+  h3.recommend-title {
+    margin-bottom: 20px;
+    font-family: "Noto Serif TC", serif;
+    font-weight: bold;
+    text-align: center;
+    @include small{
+      text-align: left;
     }
   }
 }
@@ -115,56 +143,56 @@
   }
 }
 
-.action-btns{
-    display:flex;
-    width:100%;
-    position:fixed;
-    left:0;
-    bottom:0;
-    z-index:1;
-    @include medium{
-        position:static;
-        column-gap:20px;
+.action-btns {
+  display: flex;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 15;
+  @include medium {
+    position: static;
+    column-gap: 20px;
+  }
+  > * {
+    flex: 1;
+    text-align: center;
+    border: 1px solid $primary;
+    @include padding(8px, 4px);
+    &:first-child {
+      background-color: $white;
+      color: $primary;
     }
-    > *{
-        flex: 1;
-        text-align: center;
-        border:1px solid $primary;
-        @include padding(8px,4px);
-        &:first-child{
-            background-color:$white;
-            color:$primary;
-        }
-        &:last-child{
-            color:$white;
-            background-color:$primary;
-        }
+    &:last-child {
+      color: $white;
+      background-color: $primary;
     }
+  }
 }
 
-.tablink{
-    display:flex;
-    justify-content: center;
-    border-bottom:1px solid $gray-500;
-    button{
-        background-color:$white;
-        border:1px solid $primary;
-        border-bottom:none;
-        @include padding(6px,16px);
-        color:$primary;
-        &.active{
-            background-color:$primary;
-            color:$white;
-        }
+.tablink {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid $gray-500;
+  button {
+    background-color: $white;
+    border: 1px solid $primary;
+    border-bottom: none;
+    @include padding(6px, 16px);
+    color: $primary;
+    &.active {
+      background-color: $primary;
+      color: $white;
     }
+  }
 }
 
-.tabcontent{
-    width:80%;
-    margin:0 auto;
-    text-align:center;
-    @include padding(40px,0);
-    @include large{
-       width:50%;
-    }
+.tabcontent {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  @include padding(40px, 0);
+  @include large {
+    width: 50%;
+  }
 }

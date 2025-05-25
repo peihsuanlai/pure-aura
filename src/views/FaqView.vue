@@ -1,8 +1,9 @@
 <template>
-  <section style="background-image:url('/images/faq-banner.png')" class="page-banner">
+  <section style="background-image:url('/images/faq-banner.png')" class="page-banner reveal"
+  data-origin="top">
     <h2>常見問題</h2>
   </section>
-  <main>
+  <main class="reveal">
     <div class="container-lg">
       <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
@@ -169,6 +170,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-</style>

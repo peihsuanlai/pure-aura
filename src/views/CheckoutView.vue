@@ -8,8 +8,8 @@
             <li class="breadcrumb-item active" aria-current="page">購物車</li>
           </ol>
         </nav>
-        <h2>購物車</h2>
-        <div class="row justify-content-center mb-5">
+        <h2 class="reveal" data-origin="top">購物車</h2>
+        <div class="row justify-content-center mb-5 reveal" data-origin="top">
           <div class="col-lg-7">
             <div class="row step-list">
               <div class="col">
@@ -44,7 +44,7 @@
             </div>
           </div>
         </div>
-        <table class="cart-table">
+        <table class="cart-table reveal">
             <thead>
                 <tr>
                   <th>圖片</th>
@@ -68,7 +68,7 @@
                         <div v-text="'NT$' + $filter.currency(item.total)"
                          :class="{'text-decoration-line-through':
                         item.final_total !== item.total}"></div>
-                        <div v-if="item.final_total !== item.total">
+                        <div v-if="item.final_total !== item.total" class="text-danger">
                           <span>折扣後：</span>
                           <span v-text="'NT$' + $filter.currency(item.final_total)"></span>
                         </div>
@@ -77,14 +77,14 @@
                 </template>
             </tbody>
         </table>
-        <div class="total-summary mb-5">
+        <div class="total-summary mb-5 reveal">
             <div class="d-flex justify-content-between fw-bold">
               <span>應付總額</span>
               <span v-text="'NT$' + $filter.currency(order.total)"></span>
             </div>
         </div>
-        <div class="order-info">
-          <h4>收件人資訊</h4>
+        <div class="order-info reveal">
+          <h4>訂購資訊</h4>
           <div v-if="order.is_paid">
             <span>訂單編號</span>
             <span v-text="order.id"></span>
@@ -95,7 +95,7 @@
           </div>
           <div>
             <span>信箱</span>
-              <span v-text="order.user.email"></span>
+            <span v-text="order.user.email" style="word-break: break-all;"></span>
           </div>
           <div>
             <span>電話</span>
@@ -115,7 +115,7 @@
             <span v-else class="text-success">付款完成</span>
           </div>
         </div>
-        <div class="text-center" v-if="!order.is_paid" style="margin-top:60px;">
+        <div class="text-center reveal" v-if="!order.is_paid" style="margin-top:60px;">
           <button type="button" class="cta-btn" @click="payOrder">確認付款</button>
         </div>
     </div>

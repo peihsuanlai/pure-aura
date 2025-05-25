@@ -1,26 +1,26 @@
 .navbar-container {
   background-color: $primary;
   position: fixed;
-  z-index: 3;
+  z-index: 16;
   top: 0;
   left: 0;
   right: 0;
 }
 
-.news-carousel{
-  background-color:$secondary;
-  @include padding(4px,15px);
-  .item{
-    font-size:14px;
-    display:flex;
-    column-gap:1rem;
+.news-carousel {
+  background-color: $secondary;
+  @include padding(4px, 15px);
+  .item {
+    font-size: 14px;
+    display: flex;
+    column-gap: 1rem;
     position: relative;
     animation: slideLeft 10s linear forwards;
     > * {
       flex-shrink: 0;
     }
-    @include large{
-      font-size:16px;
+    @include large {
+      font-size: 16px;
       animation-duration: 16s;
     }
   }
@@ -71,6 +71,15 @@ nav {
     left: 0;
     opacity: 0.5;
     transition: all 0.5s ease-in-out;
+    &.show {
+      background-color: $primary;
+      opacity: 1;
+      top: 85px;
+      @include large {
+        background-color: transparent;
+        top: 0;
+      }
+    }
     @include large {
       top: auto;
       left: auto;
@@ -144,26 +153,18 @@ label[for="menuToggle"] {
   }
 }
 
-#menuToggle:checked ~ label span:nth-child(1) {
-  transform: rotate(45deg);
-  top: 16px;
-}
-#menuToggle:checked ~ label span:nth-child(2) {
-  width: 0%;
-  opacity: 0;
-}
-
-#menuToggle:checked ~ label span:nth-child(3) {
-  transform: rotate(-45deg);
-  top: 16px;
-}
-
-#menuToggle:checked ~ .navbarMenu {
-  background-color: $primary;
-  opacity: 1;
-  top: 114.5px;
-  @include large {
-    background-color: transparent;
+label[for="menuToggle"] {
+  span:nth-child(1).rotate {
+    transform: rotate(45deg);
+    top: 16px;
+  }
+  span:nth-child(2).rotate {
+    width: 0%;
+    opacity: 0;
+  }
+  span:nth-child(3).rotate {
+    transform: rotate(-45deg);
+    top: 16px;
   }
 }
 

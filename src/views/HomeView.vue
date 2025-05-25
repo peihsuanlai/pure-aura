@@ -1,5 +1,5 @@
 <template>
-    <!-- 單張圖片輪播，無箭頭和分頁 -->
+    <!-- 單張圖片輪播 -->
     <CarouselComponent
       :slides="slidesData"
       :spaceBetween="0"
@@ -12,10 +12,10 @@
     </CarouselComponent>
     <section class="category-container home-section">
       <div class="container">
-        <h2 class="title">
+        <h2 class="title reveal" data-origin="top">
           <span v-text="titles.brandSelect"></span>
         </h2>
-        <div class="row category-list">
+        <div class="row category-list reveal">
           <div
             class="col-sm-6 col-lg-4"
             v-for="(item, index) in categoryData"
@@ -33,13 +33,13 @@
     <section class="brand-container home-section">
       <div class="container">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-6 reveal" data-origin="left">
             <div
               class="img"
               :style="{ backgroundImage: `url(${brand.imageSrc})` }"
             ></div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6 reveal" data-origin="right">
             <div class="content">
               <h2 class="title" v-text="brand.slogan1"></h2>
               <p v-text="brand.intro1"></p>
@@ -51,35 +51,36 @@
       </div>
     </section>
     <section class="home-img-block">
-      <div class="container">
+      <div class="container reveal" data-opacitty="0.3">
         <img :src="adImgSrc" alt="" class="w-100" />
       </div>
     </section>
-    <section class="limit-sale-container home-section">
+    <section class=" limit-sale-container home-section">
       <div class="container">
-        <h2 class="title">
+        <h2 class="title reveal" data-origin="top">
           <span v-text="titles.limitSale"></span>
         </h2>
-          <div class="countdown-time">
-            <div class="wrapper">
-              <div>
-                  <span class="num" v-text="countDown.day"></span><span>日</span>
-              </div>
-              <span class="colon">:</span>
-              <div>
-                  <span class="num" v-text="countDown.hr"></span><span>時</span>
-              </div>
-              <span class="colon">:</span>
-              <div>
-                  <span class="num" v-text="countDown.min"></span><span>分</span>
-              </div>
-              <span class="colon">:</span>
-              <div>
-                  <span class="num" v-text="countDown.sec"></span><span>秒</span>
-              </div>
+        <div class="countdown-time reveal" data-origin="top">
+          <div class="wrapper">
+            <div>
+                <span class="num" v-text="countDown.day"></span><span>日</span>
+            </div>
+            <span class="colon">:</span>
+            <div>
+                <span class="num" v-text="countDown.hr"></span><span>時</span>
+            </div>
+            <span class="colon">:</span>
+            <div>
+                <span class="num" v-text="countDown.min"></span><span>分</span>
+            </div>
+            <span class="colon">:</span>
+            <div>
+                <span class="num" v-text="countDown.sec"></span><span>秒</span>
             </div>
           </div>
-        <div class="row product-list">
+        </div>
+        <div class="row product-carousel product-list reveal">
+          <!-- 多個產品輪播 -->
           <CarouselComponent :slides="saleProduct" :slidesPerView="1"
             :spaceBetween="0" :loop="false" :autoplay="false"
             :pagination="false" :breakpoints="{
@@ -95,7 +96,7 @@
                         <div>查看細節</div>
                       </div>
                     </div>
-                    <h4 v-text="item.title"></h4>
+                    <h4 class="product-title" v-text="item.title"></h4>
                     <div class="price">
                       <span
                         class="original-price"
@@ -188,7 +189,6 @@ export default {
           );
         })
         .catch(() => {
-          // alert(err.data.message);
         });
     },
     countDownHandler() {
@@ -221,24 +221,6 @@ export default {
       return this.isMobile ? item.mobileSrc : item.src;
     },
     ...mapActions(cartStore, ['addToCart']),
-    // addToCart(id, qty = 1) {
-    //   const cart = {
-    //     product_id: id,
-    //     qty,
-    //   };
-    //   axios
-    //     .post(`${VITE_API_URL}/api/${VITE_API_PATH}/cart`, { data: cart })
-    //     .then(() => {
-    //       Swal.fire({
-    //         title: '商品已加入購物車',
-    //         icon: 'success',
-    //         timer: 1500,
-    //         showConfirmButton: false,
-    //       });
-    //     })
-    //     .catch(() => {
-    //     });
-    // },
   },
   computed: {
     isMobile() {
