@@ -8,8 +8,8 @@
             <li class="breadcrumb-item active" aria-current="page">購物車</li>
           </ol>
         </nav>
-        <h2>購物車</h2>
-        <div class="row justify-content-center mb-5">
+        <h2 claas="reveal" data-origin="top">購物車</h2>
+        <div class="row justify-content-center mb-5 reveal" data-origin="top">
           <div class="col-lg-7">
             <div class="row step-list">
               <div class="col active">
@@ -42,8 +42,13 @@
             </div>
           </div>
         </div>
-        <h3>確認訂購品項</h3>
-        <table class="cart-table mb-3">
+        <div class="d-flex justify-content-between align-items-center"
+         style="margin-bottom: 1.5rem;">
+          <h3 class="reveal mb-0">確認訂購品項</h3>
+          <button type="button" class="remove-btn" @click="emptyCart"
+          v-if="cart?.carts?.length > 0">清空購物車</button>
+        </div>
+        <table class="cart-table reveal" :class="{'mb-4': cart?.carts?.length === 0}">
             <thead>
                 <tr>
                   <th>圖片</th>
@@ -92,7 +97,7 @@
                 </template>
             </tbody>
         </table>
-        <div v-if="cart?.carts?.length > 0" class="total-summary mb-5">
+        <div v-if="cart?.carts?.length > 0" class="total-summary mb-5 reveal">
           <div>
             <div class="text-end fw-bold">共計 <span v-text="cart?.carts?.length"></span> 項商品</div>
             <div class="d-flex justify-content-between fw-bold">
@@ -129,8 +134,8 @@
             </div>
           </div>
         </div>
-        <h3>填寫訂購資料</h3>
-        <div class="mt-5">
+        <h3 class="reveal">填寫訂購資料</h3>
+        <div class="mt-5 reveal">
             <VeeForm
               ref="form"
               class="row justify-content-center"
@@ -226,8 +231,6 @@ const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 export default {
   data() {
     return {
-      // cart: {},
-      // isLoading: true,
       loadingStatus: {
         loadingItem: '',
       },
@@ -268,17 +271,6 @@ export default {
         .catch(() => {
         });
     },
-    // getCart() {
-    //   this.isLoading = true;
-    //   axios
-    //     .get(`${VITE_API_URL}/api/${VITE_API_PATH}/cart`)
-    //     .then((res) => {
-    //       this.isLoading = false;
-    //       this.cart = res.data.data;
-    //     })
-    //     .catch(() => {
-    //     });
-    // },
     deleteProduct(id) {
       Swal.fire({
         title: '確定刪除此商品？',
@@ -321,14 +313,22 @@ export default {
         });
     },
     emptyCart() {
-      const url = `${VITE_API_URL}/api/${VITE_API_PATH}/carts`;
-      axios
-        .delete(url)
-        .then(() => {
-          this.getCart();
-        })
-        .catch(() => {
-        });
+      Swal.fire({
+        title: '確定刪除購物車內所有商品？',
+        showCancelButton: true,
+        confirmButtonText: '是，刪除',
+        cancelButtonText: '取消',
+        icon: 'warning',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.delete(`${VITE_API_URL}/api/${VITE_API_PATH}/carts`)
+            .then(() => {
+              this.getCart();
+            })
+            .catch(() => {
+            });
+        }
+      });
     },
     sendOrder() {
       const url = `${VITE_API_URL}/api/${VITE_API_PATH}/order`;

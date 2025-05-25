@@ -1,5 +1,6 @@
 <template>
-   <section :style="{ backgroundImage: `url(${banner})` }" class="page-banner">
+   <section :style="{ backgroundImage: `url(${banner})` }" class="page-banner reveal"
+   data-origin="top">
     <h2>關於我們</h2>
   </section>
   <main>
@@ -13,27 +14,27 @@
     </section>
     <section class="container-lg">
       <div class="row team-block">
-        <div class="col-lg-5">
+        <div class="col-lg-5 reveal" data-origin="left">
           <img :src="brandIntro.imageSrc" alt="">
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-5 reveal" data-origin="right">
           <div class="content">
             <h2 v-text="brandIntro.title"></h2>
             <p v-html="brandIntro.text"></p>
           </div>
         </div>
       </div>
-      <div class="row gallery-list">
+      <div class="row gallery-list reveal">
         <div class="col-lg-4" v-for="(item,index) in gallery" :key="'gallery'+(index+1)">
           <img :src="item.src" alt="">
         </div>
       </div>
       <div class="contact-block">
         <div class="text-center">
-          <h2 v-text="contactInfo.title"></h2>
-          <p v-html="contactInfo.text"></p>
+          <h2 v-text="contactInfo.title" class="reveal" data-origin="top"></h2>
+          <p v-html="contactInfo.text" class="reveal" data-origin="top"></p>
         </div>
-        <VeeForm class="row justify-content-center g-3"
+        <VeeForm class="row justify-content-center g-3 reveal"
         @submit="sendMessage" v-slot="{ errors }">
           <div class="col-md-5">
             <label for="name" class="form-label"><span class="text-danger">*</span>姓名</label>
@@ -130,6 +131,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-</style>

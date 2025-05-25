@@ -11,19 +11,18 @@
                 <h1 class="logo"
                 style="background-image:url('/images/logo-white-sm.png')">PURE AURA</h1>
             </RouterLink>
-            <input type="checkbox" id="menuToggle">
+            <input type="checkbox" id="menuToggle" v-model="menuOpen">
             <label for="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span :class="{'rotate': menuOpen }"></span>
+                <span :class="{'rotate': menuOpen }"></span>
+                <span :class="{'rotate': menuOpen }"></span>
             </label>
-            <div class="navbarMenu">
+            <div class="navbarMenu" :class="{'show': menuOpen }">
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item">
                         <RouterLink class="nav-link"
-                         :class="{ active: !$route.query.category && $route.path === '/products' }"
-                        to="/products">
-                            全系列商品</RouterLink>
+                        :class="{ active: !$route.query.category && $route.path === '/products' }"
+                        to="/products">全系列商品</RouterLink>
                     </li>
                      <li class="nav-item">
                         <RouterLink class="nav-link"
@@ -62,7 +61,7 @@
     <footer>
         <div class="container-lg mb-3">
             <div class="row">
-                <div class="col-sm-6 col-md-4 col-lg-5">
+                <div class="col-md-4 col-lg-5">
                     <div class="item">
                         <RouterLink to="/">
                             <img src="/images/logo-green.png" alt="PURE AURA">
@@ -82,7 +81,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-4 col-lg-2">
+                <div class="col-sm-6 col-md-4 col-lg-2">
                     <div class="item">
                         <span class="title">FOLLOW US</span>
                         <ul class="social-icons">
@@ -109,7 +108,7 @@
         <div class="container-lg bottom">
             <div>所有圖片均取自<a href="https://unsplash.com/">Unsplash</a> ，僅作為個人學習與作品製作之用。</div>
             <div>
-                Copyright @ 2023 PURE AURA Inc. All rights reserved. <a href="/">隱私權政策</a>
+                Copyright @ 2025 PURE AURA Inc. All rights reserved.
             </div>
         </div>
     </footer>
@@ -122,6 +121,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'pinia';
+import ScrollReveal from 'scrollreveal';
 import cartStore from '../stores/cartStore';
 
 export default {
@@ -129,6 +129,7 @@ export default {
     return {
       isBouncing: false,
       currentIndex: 0,
+      menuOpen: false,
       news: [
         {
           date: '2025-05-20',
@@ -154,6 +155,21 @@ export default {
     getNewIndex() {
       this.currentIndex = (this.currentIndex + 1) % this.news.length;
     },
+    // 視差
+    initScrollReveal() {
+      document.querySelectorAll('.reveal').forEach((el) => {
+        ScrollReveal().reveal(el, {
+          origin: el.dataset.origin || 'bottom',
+          distance: el.dataset.distance || '50px',
+          opacity: Number(el.opacity) || 0,
+          duration: 1000,
+          delay: Number(el.dataset.delay) || 0,
+          easing: 'ease-out',
+          reset: false,
+          viewFactor: 0.1,
+        });
+      });
+    },
   },
   watch: {
     // 監聽購物車數量以變動isBouncing，產生彈跳效果
@@ -168,6 +184,18 @@ export default {
         }
       },
     },
+    // 監聽路由變化：切換的時候關閉選單、啟動頁面視差
+    '$route.fullPath': {
+      handler() {
+        if (this.menuOpen) {
+          this.menuOpen = !this.menuOpen;
+        }
+        // dom 更新後執行
+        this.$nextTick(() => {
+          this.initScrollReveal();
+        });
+      },
+    },
   },
   beforeUnmount() {
     clearTimeout(this.bounceTimer);
@@ -175,6 +203,7 @@ export default {
   mounted() {
     this.getCart();
     this.getNewIndex();
+    this.initScrollReveal();
   },
 };
 </script>

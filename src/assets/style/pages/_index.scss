@@ -177,38 +177,6 @@
   .title span {
     background-color: $white;
   }
-  .swiper {
-    position: static;
-  }
-  .swiper-button-prev,
-  .swiper-button-next {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    background-color: $white;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
-    &::after {
-      font-family: "bootstrap-icons";
-      font-size: 24px;
-      color: $light-text;
-    }
-  }
-  .swiper-button-prev {
-    left: 0;
-    &::after {
-      content: "\F284";
-    }
-  }
-  .swiper-button-next {
-    right: 0;
-    &::after {
-      content: "\F285";
-    }
-  }
 }
 
 .countdown-time {

@@ -1,8 +1,9 @@
 <template>
-   <section style="background-image:url('/images/product-banner.png')" class="page-banner">
+   <section style="background-image:url('/images/product-banner.png')" class="page-banner reveal"
+   data-origin="top">
     <h2>全系列商品</h2>
   </section>
-  <main>
+  <main class="reveal">
     <div class="container-lg">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -12,26 +13,28 @@
           <li class="breadcrumb-item active" aria-current="page" v-text="currentCategory"></li>
         </ol>
       </nav>
-      <div class="row">
+      <div class="row product-page">
         <div class="col-lg-3">
           <div class="left-menu mb-4 mb-lg-0">
             <a href="#" class="menu-switch" @click.prevent="toggleMenu">分類
               <i class="bi bi-chevron-right arrow-icon"
               :class="[isRotated ? 'rotate' :'']"></i></a>
-            <ul class="mb-0 list-unstyled menu-list d-lg-block"
-            :class="[isMenuVisible ? 'd-none' :'']">
-              <li>
-                <a href="#" @click.prevent="getProducts(1)"
-                :class="{'active' : currentCategory === '全系列商品'}">全系列商品</a>
-              </li>
-              <li v-for="(item, index) in menu" :key="'category'+ (index+1)">
-                <a href="#" :class="{'active' : currentCategory === item}"
-                v-text="item" @click.prevent="getProducts(1, item)"></a>
-              </li>
-            </ul>
+            <div class="menu-list-container">
+              <ul class="mb-0 list-unstyled menu-list d-lg-block"
+              :class="[isMenuVisible ? 'd-none' :'']">
+                <li>
+                  <a href="#" @click.prevent="getProducts(1)"
+                  :class="{'active' : currentCategory === '全系列商品'}">全系列商品</a>
+                </li>
+                <li v-for="(item, index) in menu" :key="'category'+ (index+1)">
+                  <a href="#" :class="{'active' : currentCategory === item}"
+                  v-text="item" @click.prevent="getProducts(1, item)"></a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div class="col-lg-9 product-page">
+        <div class="col-lg-9">
           <div class="row product-list mb-5">
             <div class="col-sm-6 col-lg-4" v-for="item in products" :key="item.id">
               <RouterLink :to="{ name: 'Product', params: { id: item.id } }" class="item">
@@ -43,7 +46,7 @@
                         <div>查看細節</div>
                       </div>
                     </div>
-                    <h4 v-text="item.title"></h4>
+                    <h4 class="product-title" v-text="item.title"></h4>
                     <div class="price">
                       <span
                         class="original-price"
@@ -86,11 +89,14 @@ export default {
     };
   },
   methods: {
+    toggleMenu() {
+      this.isMenuVisible = !this.isMenuVisible;
+      this.isRotated = !this.isRotated;
+    },
     getCategory() {
       axios
         .get(`${VITE_API_URL}/api/${VITE_API_PATH}/products/all`)
         .then((res) => {
-          this.products = res.data.products;
           const categoryList = [];
           res.data.products.forEach((item) => {
             const trimmedCate = item.category.trim();
@@ -118,30 +124,13 @@ export default {
         });
     },
     ...mapActions(cartStore, ['addToCart']),
-    // addToCart(id, qty = 1) {
-    //   const cart = {
-    //     product_id: id,
-    //     qty,
-    //   };
-    //   axios
-    //     .post(`${VITE_API_URL}/api/${VITE_API_PATH}/cart`, { data: cart })
-    //     .then(() => {
-    //       Swal.fire({
-    //         title: '商品已加入購物車',
-    //         icon: 'success',
-    //         timer: 1500,
-    //         showConfirmButton: false,
-    //       });
-    //     })
-    //     .catch(() => {
-    //     });
-    // },
   },
   watch: {
     '$route.query.category': {
       handler(newCategory) {
         this.getProducts(1, newCategory || '');
       },
+      immediate: true,
     },
   },
   components: {
@@ -149,9 +138,6 @@ export default {
   },
   mounted() {
     this.getCategory();
-  },
-  created() {
-    this.getProducts(1, this.$route.query.category || '');
   },
 };
 </script>
