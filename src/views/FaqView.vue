@@ -26,9 +26,9 @@
           <div class="left-menu mb-4 mb-lg-0">
             <a href="#" class="menu-switch" @click.prevent="toggleMenu">分類
               <i class="bi bi-chevron-right arrow-icon"
-              :class="[isRotated ? 'rotate' :'']"></i></a>
+              :class="{'rotate': menuOpen }"></i></a>
             <ul class="mb-0 list-unstyled menu-list d-lg-block"
-            :class="[isMenuVisible ? 'd-none' :'']">
+            :class="{'d-none': !menuOpen }">
               <li v-for="(item, index) in menu" :key="'category'+ (index+1)">
                 <a href="#" :class="{'active' : currentCategory === item}"
                 v-text="item" @click.prevent="currentCategory = item"></a>
@@ -63,8 +63,7 @@
 export default {
   data() {
     return {
-      isMenuVisible: true,
-      isRotated: false,
+      menuOpen: false,
       menu: ['全部', '商品購物', '訂單問題', '退換貨政策'],
       questions: [
         {
@@ -151,8 +150,7 @@ export default {
   },
   methods: {
     toggleMenu() {
-      this.isMenuVisible = !this.isMenuVisible;
-      this.isRotated = !this.isRotated;
+      this.menuOpen = !this.menuOpen;
     },
     searchHandler() {
       if (this.compositionStatus) return;
