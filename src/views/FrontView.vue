@@ -122,7 +122,7 @@
 <script>
 import { mapState, mapActions } from 'pinia';
 import ScrollReveal from 'scrollreveal';
-import cartStore from '../stores/cartStore';
+import cartStore from '@/stores/cartStore';
 
 export default {
   data() {

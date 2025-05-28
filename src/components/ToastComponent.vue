@@ -13,9 +13,12 @@
 import { Toast } from 'bootstrap';
 
 export default {
-  props: [
-    'msg',
-  ],
+  props: {
+    msg: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   mounted() {
     const toastElement = this.$refs.toast;
     const toast = new Toast(toastElement, {

@@ -30,33 +30,36 @@
 <script>
 import axios from 'axios';
 import { Modal } from 'bootstrap';
+import { showSuccessToast, showErrorToast } from '@/methods/toastHelper';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 
 export default {
-  props: ['item', 'type'],
+  props: {
+    item: {
+      type: Object,
+      default: () => ({}),
+    },
+    type: {
+      type: String,
+    },
+  },
   data() {
     return {
       delModal: null,
     };
   },
-  inject: ['emitter'],
   methods: {
     deleteData() {
-      axios
-        .delete(
-          `${VITE_API_URL}/api/${VITE_API_PATH}/admin/${this.type}/${this.item.id}`,
-        )
+      axios.delete(`${VITE_API_URL}/api/${VITE_API_PATH}/admin/${this.type}/${this.item.id}`)
         .then(() => {
-          this.closeModal();
           this.$emit('update');
-          this.emitter.emit('push-message', {
-            style: 'success',
-            title: '刪除成功',
-          });
+          showSuccessToast('刪除');
         })
-        .catch(() => {
+        .catch((err) => {
+          showErrorToast(err, '刪除');
         });
+      this.closeModal();
     },
     openModal() {
       this.delModal.show();

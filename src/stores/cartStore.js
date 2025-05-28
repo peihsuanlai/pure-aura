@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
 import axios from 'axios';
-import Swal from 'sweetalert2';
+import { showSuccessAlert, showErrorAlert } from '@/methods/alertHelper';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 
@@ -20,6 +20,7 @@ export default defineStore('cartStore', {
           this.cart = res.data.data;
         })
         .catch(() => {
+          showErrorAlert();
         });
     },
     addToCart(id, qty = 1) {
@@ -30,15 +31,11 @@ export default defineStore('cartStore', {
       axios
         .post(`${VITE_API_URL}/api/${VITE_API_PATH}/cart`, { data: cart })
         .then(() => {
-          Swal.fire({
-            title: '商品已加入購物車',
-            icon: 'success',
-            timer: 1500,
-            showConfirmButton: false,
-          });
+          showSuccessAlert('商品已加入購物車', false);
           this.getCart();
         })
         .catch(() => {
+          showErrorAlert();
         });
     },
   },

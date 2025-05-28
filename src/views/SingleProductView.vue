@@ -96,9 +96,10 @@
 <script>
 import axios from 'axios';
 import { mapActions } from 'pinia';
-import cartStore from '../stores/cartStore';
-import ProductImageCarousel from '../components/ProductImageCarousel.vue';
-import CarouselComponent from '../components/CarouselComponent.vue';
+import cartStore from '@/stores/cartStore';
+import ProductImageCarousel from '@/components/ProductImageCarousel.vue';
+import CarouselComponent from '@/components/CarouselComponent.vue';
+import { showErrorAlert } from '@/methods/alertHelper';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -128,17 +129,19 @@ export default {
           this.product = res.data.product;
           this.getRecommendProducts(this.product.category);
         })
-        .catch(() => {
+        .catch((err) => {
+          showErrorAlert(err.response.data.message, false);
+          this.$router.push('/products');
         });
     },
     getRecommendProducts(category) {
-      axios
-        .get(`${VITE_API_URL}/api/${VITE_API_PATH}/products?category=${category}`)
+      axios.get(`${VITE_API_URL}/api/${VITE_API_PATH}/products?category=${category}`)
         .then((res) => {
           const { products } = res.data;
           this.recommendProduct = products;
         })
         .catch(() => {
+          showErrorAlert();
         });
     },
     ...mapActions(cartStore, ['addToCart']),

@@ -57,6 +57,7 @@
 
 import axios from 'axios';
 import { Modal } from 'bootstrap';
+import { showSuccessToast, showErrorToast } from '@/methods/toastHelper';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -66,9 +67,7 @@ export default {
       // 預期傳進來是物件型別
       type: Object,
       // 如果沒有正確傳入，則給予預設值
-      default() {
-        return {};
-      },
+      default: () => ({}),
     },
     isNew: {
       type: Boolean,
@@ -82,7 +81,6 @@ export default {
       due_date: '',
     };
   },
-  inject: ['emitter'],
   watch: {
     coupon() {
       this.tempCoupon = this.coupon;
@@ -107,20 +105,12 @@ export default {
       axios[http](apiUrl, { data: this.tempCoupon })
         .then(() => {
           this.$emit('update');
-          this.emitter.emit('push-message', {
-            style: 'success',
-            title: '更新成功',
-          });
-          this.closeModal();
+          showSuccessToast();
         })
         .catch((err) => {
-          this.emitter.emit('push-message', {
-            style: 'danger',
-            title: '更新失敗',
-            content: err.response.data.message.join('、'),
-          });
-          this.closeModal();
+          showErrorToast(err);
         });
+      this.closeModal();
     },
     openModal() {
       this.couponModal.show();

@@ -59,9 +59,10 @@
 </template>
 <script>
 import axios from 'axios';
-import DeleteModal from '../../components/DeleteModal.vue';
-import OrderModal from '../../components/OrderModal.vue';
-import PaginationComponent from '../../components/PaginationComponent.vue';
+import DeleteModal from '@/components/DeleteModal.vue';
+import OrderModal from '@/components/OrderModal.vue';
+import PaginationComponent from '@/components/PaginationComponent.vue';
+import { showSuccessToast } from '@/methods/toastHelper';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 
@@ -102,14 +103,10 @@ export default {
         .then(() => {
           this.isLoading = false;
           this.getOrders(this.currentPage);
-          this.emitter.emit('push-message', {
-            style: 'success',
-            title: '付款狀態已更新',
-          });
+          showSuccessToast('付款狀態更新');
         });
     },
   },
-  inject: ['emitter'],
   components: {
     DeleteModal,
     OrderModal,

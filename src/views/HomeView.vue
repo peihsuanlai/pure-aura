@@ -81,7 +81,7 @@
         </div>
         <div class="row product-carousel product-list reveal">
           <!-- 多個產品輪播 -->
-          <CarouselComponent :slides="saleProduct" :slidesPerView="1"
+          <CarouselComponent :slides="saleProducts" :slidesPerView="1"
             :spaceBetween="0" :loop="false" :autoplay="false"
             :pagination="false" :breakpoints="{
               576: { slidesPerView: 2, spaceBetween: 20 },
@@ -119,8 +119,9 @@
 <script>
 import axios from 'axios';
 import { mapActions } from 'pinia';
-import cartStore from '../stores/cartStore';
-import CarouselComponent from '../components/CarouselComponent.vue';
+import cartStore from '@/stores/cartStore';
+import CarouselComponent from '@/components/CarouselComponent.vue';
+import { showErrorAlert } from '@/methods/alertHelper';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 
@@ -168,7 +169,7 @@ export default {
           '我們用心製作每一個小物件，為您的生活空間帶來無可比擬的清新與品味，從純粹的香氣中找到平靜，將自然的力量注入您的每一天。',
       },
       adImgSrc: '/images/ad-banner.png',
-      saleProduct: [],
+      saleProducts: [],
       countDown: {
         day: 10,
         hr: 0,
@@ -180,15 +181,15 @@ export default {
     };
   },
   methods: {
-    getSaleProduct() {
-      axios
-        .get(`${VITE_API_URL}/api/${VITE_API_PATH}/products/all`)
+    getSaleProducts() {
+      axios.get(`${VITE_API_URL}/api/${VITE_API_PATH}/products/all`)
         .then((res) => {
-          this.saleProduct = res.data.products.filter(
+          this.saleProducts = res.data.products.filter(
             (item) => item.price < item.origin_price,
           );
         })
         .catch(() => {
+          showErrorAlert();
         });
     },
     countDownHandler() {
@@ -229,7 +230,7 @@ export default {
   },
   components: { CarouselComponent },
   mounted() {
-    this.getSaleProduct();
+    this.getSaleProducts();
     this.countDownHandler();
     this.updateWindowWidth();
     window.addEventListener('resize', this.updateWindowWidth);

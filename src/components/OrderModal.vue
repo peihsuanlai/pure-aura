@@ -98,24 +98,19 @@
             <button type="button" class="btn btn-light"
                     data-bs-dismiss="modal">取消
             </button>
-            <!-- <button type="button" class="btn btn-primary text-white"
-                    @click="$emit('update-order', tempOrder)">確認</button> -->
           </div>
         </div>
       </div>
     </div>
   </template>
 <script>
-// import axios from 'axios';
 import { Modal } from 'bootstrap';
 
 export default {
   props: {
     order: {
       type: Object,
-      default() {
-        return {};
-      },
+      default: () => ({}),
     },
   },
   data() {

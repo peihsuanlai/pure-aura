@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import Swal from 'sweetalert2';
+import { showSuccessAlert } from '@/methods/alertHelper';
 
 export default {
   data() {
@@ -123,10 +123,7 @@ export default {
   },
   methods: {
     sendMessage() {
-      Swal.fire({
-        title: '您的留言已送出',
-        icon: 'success',
-      });
+      showSuccessAlert('您的留言已送出', true);
     },
   },
 };
