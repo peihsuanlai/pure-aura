@@ -72,8 +72,9 @@
 <script>
 import axios from 'axios';
 import { mapActions } from 'pinia';
-import cartStore from '../stores/cartStore';
-import PaginationComponent from '../components/PaginationComponent.vue';
+import cartStore from '@/stores/cartStore';
+import PaginationComponent from '@/components/PaginationComponent.vue';
+import { showErrorAlert } from '@/methods/alertHelper';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -94,8 +95,7 @@ export default {
       this.isRotated = !this.isRotated;
     },
     getCategory() {
-      axios
-        .get(`${VITE_API_URL}/api/${VITE_API_PATH}/products/all`)
+      axios.get(`${VITE_API_URL}/api/${VITE_API_PATH}/products/all`)
         .then((res) => {
           const categoryList = [];
           res.data.products.forEach((item) => {
@@ -107,6 +107,7 @@ export default {
           });
         })
         .catch(() => {
+          showErrorAlert();
         });
     },
     getProducts(page = 1, category = '') {
@@ -121,6 +122,7 @@ export default {
           this.isLoading = false;
         })
         .catch(() => {
+          showErrorAlert();
         });
     },
     ...mapActions(cartStore, ['addToCart']),

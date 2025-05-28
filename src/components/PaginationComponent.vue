@@ -25,7 +25,12 @@
 
 <script>
 export default {
-  props: ['pages'],
+  props: {
+    pages: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   methods: {
     switchPage(page, category) {
       this.$emit('switchPage', page, category);

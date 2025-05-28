@@ -45,9 +45,9 @@
   </template>
 <script>
 import axios from 'axios';
-import DeleteModal from '../../components/DeleteModal.vue';
-import CouponModal from '../../components/CouponModal.vue';
-import PaginationComponent from '../../components/PaginationComponent.vue';
+import DeleteModal from '@/components/DeleteModal.vue';
+import CouponModal from '@/components/CouponModal.vue';
+import PaginationComponent from '@/components/PaginationComponent.vue';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 

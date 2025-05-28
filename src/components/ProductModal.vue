@@ -103,7 +103,6 @@
                     </div>
                   </div>
                   <hr>
-
                   <div class="mb-3">
                     <label for="description" class="form-label">簡介</label>
                     <textarea id="description" type="text" class="form-control"
@@ -150,17 +149,27 @@
 
 import axios from 'axios';
 import { Modal } from 'bootstrap';
+import { showSuccessToast, showErrorToast } from '@/methods/toastHelper';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 export default {
-  props: ['product', 'isNew'],
+  props: {
+    product: {
+      // 預期傳進來是物件型別
+      type: Object,
+      // 如果沒有正確傳入，則給予預設值
+      default: () => ({}),
+    },
+    isNew: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       productModal: null,
       tempProduct: {},
     };
   },
-  inject: ['emitter'],
   methods: {
     updateData() {
       let apiUrl = `${VITE_API_URL}/api/${VITE_API_PATH}/admin/product/${this.product.id}`;
@@ -171,31 +180,24 @@ export default {
       }
       axios[http](apiUrl, { data: this.tempProduct })
         .then(() => {
-          this.closeModal();
           this.$emit('update');
-          this.emitter.emit('push-message', {
-            style: 'success',
-            title: '更新成功',
-          });
+          showSuccessToast();
         })
         .catch((err) => {
-          this.emitter.emit('push-message', {
-            style: 'danger',
-            title: '更新失敗',
-            content: err.response.data.message.join('、'),
-          });
+          showErrorToast(err);
         });
+      this.closeModal();
     },
     uploadFile() {
       const uploadedFile = this.$refs.fileInput.files[0];
       const formData = new FormData();
       formData.append('file-to-upload', uploadedFile);
-      axios
-        .post(`${VITE_API_URL}/api/${VITE_API_PATH}/admin/upload`, formData)
+      axios.post(`${VITE_API_URL}/api/${VITE_API_PATH}/admin/upload`, formData)
         .then((res) => {
           this.tempProduct.imageUrl = res.data.imageUrl;
         })
-        .catch(() => {
+        .catch((err) => {
+          showErrorToast(err, '上傳');
         });
     },
     createImages() {

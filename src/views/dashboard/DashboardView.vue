@@ -33,7 +33,6 @@
 
 <script>
 import axios from 'axios';
-
 import emitter from '@/methods/emitter';
 import ToastMessage from '@/components/ToastMessage.vue';
 
@@ -46,8 +45,7 @@ export default {
   },
   methods: {
     check() {
-      axios
-        .post(`${VITE_API_URL}/api/user/check`)
+      axios.post(`${VITE_API_URL}/api/user/check`)
         .then(() => {
           this.checkSuccess = true;
           emitter.emit('push-message', {
@@ -78,7 +76,6 @@ export default {
       /(?:(?:^|.*;\s*)myToken\s*=\s*([^;]*).*$)|^.*$/,
       '$1',
     );
-    // console.log(token);
     axios.defaults.headers.common.Authorization = token;
     this.check();
   },

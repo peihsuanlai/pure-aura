@@ -212,7 +212,8 @@
                 ></textarea>
               </div>
               <div class="text-center">
-                <button type="submit" class="cta-btn">確認</button>
+                <button type="submit" class="cta-btn"
+                :disabled="cart?.carts?.length === 0">確認</button>
               </div>
             </VeeForm>
         </div>
@@ -225,7 +226,8 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { mapActions, mapState } from 'pinia';
-import cartStore from '../stores/cartStore';
+import cartStore from '@/stores/cartStore';
+import { showSuccessAlert, showErrorAlert } from '@/methods/alertHelper';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -262,13 +264,13 @@ export default {
         product_id: item.product_id,
         qty: targetItem.qty,
       };
-      axios
-        .put(`${VITE_API_URL}/api/${VITE_API_PATH}/cart/${item.id}`, { data: cart })
+      axios.put(`${VITE_API_URL}/api/${VITE_API_PATH}/cart/${item.id}`, { data: cart })
         .then(() => {
           this.loadingStatus.loadingItem = '';
           this.getCart();
         })
         .catch(() => {
+          showErrorAlert();
         });
     },
     deleteProduct(id) {
@@ -285,6 +287,7 @@ export default {
               this.getCart();
             })
             .catch(() => {
+              showErrorAlert();
             });
         }
       });
@@ -297,19 +300,11 @@ export default {
       axios
         .post(`${VITE_API_URL}/api/${VITE_API_PATH}/coupon`, { data: coupon })
         .then(() => {
-          Swal.fire({
-            title: '優惠券已套用',
-            icon: 'success',
-            timer: 1500,
-            showConfirmButton: false,
-          });
+          showSuccessAlert('優惠券已套用', false);
           this.getCart();
         })
         .catch(() => {
-          Swal.fire({
-            title: '無此優惠券',
-            icon: 'error',
-          });
+          showErrorAlert('無此優惠券', false);
         });
     },
     emptyCart() {
@@ -324,8 +319,10 @@ export default {
           axios.delete(`${VITE_API_URL}/api/${VITE_API_PATH}/carts`)
             .then(() => {
               this.getCart();
+              this.$router.push('/products');
             })
             .catch(() => {
+              showErrorAlert();
             });
         }
       });
@@ -340,6 +337,7 @@ export default {
           this.$router.push(`/checkout/${res.data.orderId}`);
         })
         .catch(() => {
+          showErrorAlert();
         });
     },
     isPhone(value) {

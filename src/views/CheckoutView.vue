@@ -125,6 +125,7 @@
 
 <script>
 import axios from 'axios';
+import { showErrorAlert } from '@/methods/alertHelper';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 export default {
@@ -139,23 +140,24 @@ export default {
   },
   methods: {
     getOrder() {
-      axios
-        .get(`${VITE_API_URL}/api/${VITE_API_PATH}/order/${this.orderId}`)
+      axios.get(`${VITE_API_URL}/api/${VITE_API_PATH}/order/${this.orderId}`)
         .then((res) => {
           this.isLoading = false;
           this.order = res.data.order;
         })
         .catch(() => {
+          showErrorAlert();
         });
     },
     payOrder() {
       this.isLoading = true;
-      const url = `${VITE_API_URL}/api/${VITE_API_PATH}/pay/${this.orderId}`;
-      axios.post(url).then(() => {
-        this.isLoading = false;
-        this.getOrder();
-      })
+      axios.post(`${VITE_API_URL}/api/${VITE_API_PATH}/pay/${this.orderId}`)
+        .then(() => {
+          this.isLoading = false;
+          this.getOrder();
+        })
         .catch(() => {
+          showErrorAlert();
         });
     },
   },

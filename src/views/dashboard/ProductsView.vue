@@ -63,9 +63,9 @@
 
 <script>
 import axios from 'axios';
-import PaginationComponent from '../../components/PaginationComponent.vue';
-import ProductModal from '../../components/ProductModal.vue';
-import DeleteModal from '../../components/DeleteModal.vue';
+import PaginationComponent from '@/components/PaginationComponent.vue';
+import ProductModal from '@/components/ProductModal.vue';
+import DeleteModal from '@/components/DeleteModal.vue';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
 
@@ -84,8 +84,7 @@ export default {
   },
   methods: {
     getProducts(page = 1) {
-      axios
-        .get(`${VITE_API_URL}/api/${VITE_API_PATH}/admin/products?page=${page}`)
+      axios.get(`${VITE_API_URL}/api/${VITE_API_PATH}/admin/products?page=${page}`)
         .then((res) => {
           const { products, pagination } = res.data;
           this.products = products;
