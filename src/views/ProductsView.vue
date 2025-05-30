@@ -1,5 +1,5 @@
 <template>
-   <section style="background-image:url('/images/product-banner.png')" class="page-banner reveal"
+   <section style="background-image:url('images/product-banner.png')" class="page-banner reveal"
    data-origin="top">
     <h2>全系列商品</h2>
   </section>

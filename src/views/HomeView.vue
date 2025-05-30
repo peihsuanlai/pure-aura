@@ -130,13 +130,13 @@ export default {
     return {
       slidesData: [
         {
-          src: '/images/banner1.png',
-          mobileSrc: '/images/banner1-sm.png',
+          src: 'images/banner1.png',
+          mobileSrc: 'images/banner1-sm.png',
           alt: 'banner1',
         },
         {
-          src: '/images/banner2.png',
-          mobileSrc: '/images/banner2-sm.png',
+          src: 'images/banner2.png',
+          mobileSrc: 'images/banner2-sm.png',
           alt: 'banner2',
         },
       ],
@@ -146,21 +146,21 @@ export default {
       },
       categoryData: [
         {
-          src: '/images/category1.png',
+          src: 'images/category1.png',
           link: { name: 'Products', query: { category: '質感提案' } },
         },
         {
-          src: '/images/category2.png',
+          src: 'images/category2.png',
           link: { name: 'Products', query: { category: '天然の香' } },
         },
         {
-          src: '/images/category3.png',
+          src: 'images/category3.png',
           link: { name: 'Products', query: { category: '舒壓放鬆' } },
         },
       ],
       brand: {
-        bgSrc: '/images/brand-bg.png',
-        imageSrc: '/images/store.png',
+        bgSrc: 'images/brand-bg.png',
+        imageSrc: 'images/store.png',
         slogan1: '打造清新生活，享受天然香氣',
         slogan2: '喚醒感官，享受純粹',
         intro1:
@@ -168,7 +168,7 @@ export default {
         intro2:
           '我們用心製作每一個小物件，為您的生活空間帶來無可比擬的清新與品味，從純粹的香氣中找到平靜，將自然的力量注入您的每一天。',
       },
-      adImgSrc: '/images/ad-banner.png',
+      adImgSrc: 'images/ad-banner.png',
       saleProducts: [],
       countDown: {
         day: 0,
