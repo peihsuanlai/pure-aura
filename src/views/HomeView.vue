@@ -171,12 +171,13 @@ export default {
       adImgSrc: '/images/ad-banner.png',
       saleProducts: [],
       countDown: {
-        day: 10,
+        day: 0,
         hr: 0,
         min: 0,
         sec: 0,
       },
       timer: null,
+      endTimeStr: '2025-06-30T23:59:59+08:00',
       windowWidth: null,
     };
   },
@@ -192,27 +193,28 @@ export default {
           showErrorAlert();
         });
     },
-    countDownHandler() {
+    countDownHandler(time) {
+      const endTime = new Date(time).getTime();
       this.timer = setInterval(() => {
-        this.countDown.sec -= 1;
-        if (this.countDown.sec === -1) {
-          this.countDown.sec = 59;
-          this.countDown.min -= 1;
-          if (this.countDown.min === -1) {
-            this.countDown.min = 59;
-            this.countDown.hr -= 1;
-            if (this.countDown.hr === -1) {
-              this.countDown.hr = 23;
-              this.countDown.day -= 1;
-              if (this.countDown.day === -1) {
-                this.countDown.day = 0;
-                this.countDown.hr = 0;
-                this.countDown.min = 0;
-                this.countDown.sec = 0;
-              }
-            }
-          }
+        const now = new Date().getTime();
+        const distance = endTime - now;
+
+        if (distance <= 0) {
+          clearInterval(this.timer);
+          this.countDown = {
+            day: 0, hr: 0, min: 0, sec: 0,
+          };
+          return;
         }
+
+        const day = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hr = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const min = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const sec = Math.floor((distance % (1000 * 60)) / 1000);
+
+        this.countDown = {
+          day, hr, min, sec,
+        };
       }, 1000);
     },
     updateWindowWidth() {
@@ -231,7 +233,7 @@ export default {
   components: { CarouselComponent },
   mounted() {
     this.getSaleProducts();
-    this.countDownHandler();
+    this.countDownHandler(this.endTimeStr);
     this.updateWindowWidth();
     window.addEventListener('resize', this.updateWindowWidth);
   },
