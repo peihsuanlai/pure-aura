@@ -9,7 +9,7 @@
         <nav class="navbar navbar-expand-lg container-lg align-items-center">
             <RouterLink class="d-lg-none ps-2" to="/">
                 <h1 class="logo"
-                style="background-image:url('/images/logo-white-sm.png')">PURE AURA</h1>
+                style="background-image:url('images/logo-white-sm.png')">PURE AURA</h1>
             </RouterLink>
             <input type="checkbox" id="menuToggle" v-model="menuOpen">
             <label for="menuToggle">
@@ -37,7 +37,7 @@
                     <li class="nav-item d-none d-lg-block">
                         <RouterLink class="nav-link" to="/">
                             <h1 class="logo"
-                            style="background-image:url('/images/logo-white.png')">PURE AURA</h1>
+                            style="background-image:url('images/logo-white.png')">PURE AURA</h1>
                         </RouterLink>
                     </li>
                     <li class="nav-item">
@@ -64,7 +64,7 @@
                 <div class="col-md-4 col-lg-5">
                     <div class="item">
                         <RouterLink to="/">
-                            <img src="/images/logo-green.png" alt="PURE AURA">
+                            <img src="images/logo-green.png" alt="PURE AURA">
                         </RouterLink>
                     </div>
                 </div>

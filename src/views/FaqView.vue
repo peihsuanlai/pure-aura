@@ -1,5 +1,5 @@
 <template>
-  <section style="background-image:url('/images/faq-banner.png')" class="page-banner reveal"
+  <section style="background-image:url('images/faq-banner.png')" class="page-banner reveal"
   data-origin="top">
     <h2>常見問題</h2>
   </section>
