@@ -1,5 +1,5 @@
 <template>
-  <section style="background-image:url('images/faq-banner.png')" class="page-banner reveal"
+  <section :style="{ backgroundImage: `url(${banner})` }" class="page-banner reveal"
   data-origin="top">
     <h2>常見問題</h2>
   </section>
@@ -60,11 +60,14 @@
 </template>
 
 <script>
+const { BASE_URL } = import.meta.env;
+
 export default {
   data() {
     return {
       menuOpen: false,
       menu: ['全部', '商品購物', '訂單問題', '退換貨政策'],
+      banner: `${BASE_URL}images/faq-banner.png`,
       questions: [
         {
           question: '下單後多久可以收到商品呢？',

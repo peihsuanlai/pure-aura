@@ -1,5 +1,5 @@
 <template>
-   <section style="background-image:url('images/product-banner.png')" class="page-banner reveal"
+   <section :style="{ backgroundImage: `url(${banner})` }" class="page-banner reveal"
    data-origin="top">
     <h2>全系列商品</h2>
   </section>
@@ -76,10 +76,11 @@ import cartStore from '@/stores/cartStore';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import { showErrorAlert } from '@/methods/alertHelper';
 
-const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
+const { VITE_API_URL, VITE_API_PATH, BASE_URL } = import.meta.env;
 export default {
   data() {
     return {
+      banner: `${BASE_URL}images/product-banner.png`,
       isMenuVisible: true,
       isRotated: false,
       menu: [],

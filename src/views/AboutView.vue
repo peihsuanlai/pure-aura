@@ -84,33 +84,35 @@
 <script>
 import { showSuccessAlert } from '@/methods/alertHelper';
 
+const { BASE_URL } = import.meta.env;
+
 export default {
   data() {
     return {
-      banner: 'images/about-banner.png',
+      banner: `${BASE_URL}images/about-banner.png`,
       brandIntro: {
-        imageSrc: 'images/team.png',
+        imageSrc: `${BASE_URL}images/team.png`,
         title: '親近自然、共享純粹',
         text: '在忙碌與壓力交織的現代生活中，PURE AURA 致力於為您打造一片靜謐的避風港。我們的每一款產品，皆嚴選天然原料，融合大地的純粹與清新，期許每一位顧客都能擁抱自然的溫柔氣息，營造品味與質感兼具的生活氛圍。<br><br>我們相信，放鬆不僅是一種感受，更是一種生活態度。<br><br>PURE AURA 團隊熱愛自然，時常走入山林與大地，感受自然的力量，並將這份真摯的感動融入每一項產品之中，希望透過產品把這份自然之美傳遞給每一位珍愛生活的您。<br><br>讓 PURE AURA 成為您生活中的療癒夥伴，與您一起尋找生活的靜好片刻。',
       },
       gallery: [
         {
-          src: 'images/gallery1.png',
+          src: `${BASE_URL}images/gallery1.png`,
         },
         {
-          src: 'images/gallery2.png',
+          src: `${BASE_URL}images/gallery2.png`,
         },
         {
-          src: 'images/gallery3.png',
+          src: `${BASE_URL}images/gallery3.png`,
         },
         {
-          src: 'images/gallery4.png',
+          src: `${BASE_URL}images/gallery4.png`,
         },
         {
-          src: 'images/gallery5.png',
+          src: `${BASE_URL}images/gallery5.png`,
         },
         {
-          src: 'images/gallery6.png',
+          src: `${BASE_URL}images/gallery6.png`,
         },
       ],
       contactInfo: {
