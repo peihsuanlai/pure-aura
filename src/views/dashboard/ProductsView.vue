@@ -5,15 +5,15 @@
             建立新的產品
           </button>
         </div>
-        <table class="table mt-4 mb-5">
+        <table class="table mt-4 mb-5 scrollable-table">
           <thead>
             <tr>
-              <th width="120">分類</th>
+              <th>分類</th>
               <th>產品名稱</th>
-              <th width="120">原價</th>
-              <th width="120">售價</th>
-              <th width="100">上下架</th>
-              <th width="120">編輯</th>
+              <th>原價</th>
+              <th>售價</th>
+              <th>上下架</th>
+              <th>編輯</th>
             </tr>
           </thead>
           <tbody>

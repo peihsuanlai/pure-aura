@@ -55,12 +55,13 @@
         <img :src="adImgSrc" alt="" class="w-100" />
       </div>
     </section>
-    <section class=" limit-sale-container home-section">
+    <section class="limit-sale-container home-section">
       <div class="container">
         <h2 class="title reveal" data-origin="top">
           <span v-text="titles.limitSale"></span>
         </h2>
-        <div class="countdown-time reveal" data-origin="top">
+        <div class="countdown-time reveal" v-if="new Date() < new Date(endTimeStr)"
+          data-origin="top">
           <div class="wrapper">
             <div>
                 <span class="num" v-text="countDown.day"></span><span>日</span>
@@ -85,30 +86,11 @@
             :spaceBetween="0" :loop="false" :autoplay="false"
             :pagination="false" :breakpoints="{
               576: { slidesPerView: 2, spaceBetween: 20 },
-              992: { slidesPerView: 3, spaceBetween: 20 }}">
+              992: { slidesPerView: 3, spaceBetween: 20 },
+              1200: { slidesPerView: 4, spaceBetween: 20 }
+              }">
             <template v-slot:default="{ item }">
-              <RouterLink :to="{ name: 'Product', params: { id: item.id } }" class="item">
-                    <div
-                      class="img"
-                      :style="{ backgroundImage: `url(${item.imageUrl})` }"
-                    >
-                      <div class="overlay">
-                        <div>查看細節</div>
-                      </div>
-                    </div>
-                    <h4 class="product-title" v-text="item.title"></h4>
-                    <div class="price">
-                      <span
-                        class="original-price"
-                        v-text="'NT$' + $filter.currency(item.origin_price)"
-                      ></span>
-                      <span class="offer-price"
-                      v-text="'NT$' + $filter.currency(item.price)"></span>
-                    </div>
-              </RouterLink>
-              <button type="button" class="add-btn" @click="addToCart(item.id)">
-                <i class="bi bi-cart3"></i> 加入購物車
-              </button>
+              <ProductComponent :product="item"></ProductComponent>
             </template>
           </CarouselComponent>
         </div>
@@ -118,9 +100,8 @@
 
 <script>
 import axios from 'axios';
-import { mapActions } from 'pinia';
-import cartStore from '@/stores/cartStore';
 import CarouselComponent from '@/components/CarouselComponent.vue';
+import ProductComponent from '@/components/ProductComponent.vue';
 import { showErrorAlert } from '@/methods/alertHelper';
 
 const { VITE_API_URL, VITE_API_PATH, BASE_URL } = import.meta.env;
@@ -177,7 +158,7 @@ export default {
         sec: 0,
       },
       timer: null,
-      endTimeStr: '2025-06-30T23:59:59+08:00',
+      endTimeStr: '2025-08-30T23:59:59+08:00',
       windowWidth: null,
     };
   },
@@ -223,14 +204,13 @@ export default {
     getImage(item) {
       return this.isMobile ? item.mobileSrc : item.src;
     },
-    ...mapActions(cartStore, ['addToCart']),
   },
   computed: {
     isMobile() {
       return this.windowWidth < 576;
     },
   },
-  components: { CarouselComponent },
+  components: { CarouselComponent, ProductComponent },
   mounted() {
     this.getSaleProducts();
     this.countDownHandler(this.endTimeStr);

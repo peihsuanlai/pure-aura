@@ -68,24 +68,7 @@
                   576: { slidesPerView: 2, spaceBetween: 20 },
                   992: { slidesPerView: 3, spaceBetween: 20 }}">
                 <template v-slot:default="{ item }">
-                  <RouterLink :to="{ name: 'Product', params: { id: item.id } }" class="item">
-                        <div class="img"
-                          :style="{ backgroundImage: `url(${item.imageUrl})` }">
-                          <div class="overlay">
-                            <div>查看細節</div>
-                          </div>
-                        </div>
-                        <h4 class="product-title" v-text="item.title"></h4>
-                        <div class="price">
-                          <span class="original-price"
-                            v-text="'NT$' + $filter.currency(item.origin_price)"></span>
-                          <span class="offer-price"
-                            v-text="'NT$' + $filter.currency(item.price)"></span>
-                        </div>
-                  </RouterLink>
-                  <button type="button" class="add-btn" @click="addToCart(item.id)">
-                    <i class="bi bi-cart3"></i> 加入購物車
-                  </button>
+                  <ProductComponent :product="item"></ProductComponent>
                 </template>
             </CarouselComponent>
         </div>
@@ -99,6 +82,7 @@ import { mapActions } from 'pinia';
 import cartStore from '@/stores/cartStore';
 import ProductImageCarousel from '@/components/ProductImageCarousel.vue';
 import CarouselComponent from '@/components/CarouselComponent.vue';
+import ProductComponent from '@/components/ProductComponent.vue';
 import { showErrorAlert } from '@/methods/alertHelper';
 
 const { VITE_API_URL, VITE_API_PATH } = import.meta.env;
@@ -154,7 +138,7 @@ export default {
       immediate: true,
     },
   },
-  components: { ProductImageCarousel, CarouselComponent },
+  components: { ProductImageCarousel, CarouselComponent, ProductComponent },
   mounted() {
     this.productId = this.$route.params.id;
     this.getProduct(this.productId);

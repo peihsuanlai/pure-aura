@@ -451,3 +451,12 @@ div:where(.swal2-container) h2:where(.swal2-title) {
 div:where(.swal2-container) div:where(.swal2-actions){
   margin:0 !important;
 }
+
+.scrollable-table{
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  @include large{
+    display:table;
+  }
+}

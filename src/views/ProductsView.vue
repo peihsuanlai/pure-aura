@@ -37,28 +37,7 @@
         <div class="col-lg-9">
           <div class="row product-list mb-5">
             <div class="col-sm-6 col-lg-4" v-for="item in products" :key="item.id">
-              <RouterLink :to="{ name: 'Product', params: { id: item.id } }" class="item">
-                    <div
-                      class="img"
-                      :style="{ backgroundImage: `url(${item.imageUrl})` }"
-                    >
-                      <div class="overlay">
-                        <div>查看細節</div>
-                      </div>
-                    </div>
-                    <h4 class="product-title" v-text="item.title"></h4>
-                    <div class="price">
-                      <span
-                        class="original-price"
-                        v-text="'NT$' + $filter.currency(item.origin_price)"
-                      ></span>
-                      <span class="offer-price" v-text="'NT$' + $filter.currency(item.price)">
-                      </span>
-                    </div>
-              </RouterLink>
-              <button type="button" class="add-btn" @click="addToCart(item.id)">
-                <i class="bi bi-cart3"></i> 加入購物車
-              </button>
+              <ProductComponent :product="item"></ProductComponent>
             </div>
           </div>
           <PaginationComponent :pages="pagination" @switch-page="getProducts"></PaginationComponent>
@@ -71,8 +50,7 @@
 
 <script>
 import axios from 'axios';
-import { mapActions } from 'pinia';
-import cartStore from '@/stores/cartStore';
+import ProductComponent from '@/components/ProductComponent.vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import { showErrorAlert } from '@/methods/alertHelper';
 
@@ -126,7 +104,6 @@ export default {
           showErrorAlert();
         });
     },
-    ...mapActions(cartStore, ['addToCart']),
   },
   watch: {
     '$route.query.category': {
@@ -138,6 +115,7 @@ export default {
   },
   components: {
     PaginationComponent,
+    ProductComponent,
   },
   mounted() {
     this.getCategory();

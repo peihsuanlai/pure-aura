@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <table class="table mt-4">
+        <table class="table mt-4 my-5 scrollable-table">
           <thead>
           <tr>
             <th>時間</th>

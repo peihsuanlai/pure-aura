@@ -5,7 +5,7 @@
           建立新的優惠券
         </button>
       </div>
-      <table class="table mt-4">
+      <table class="table mt-4 my-5 scrollable-table">
         <thead>
         <tr>
           <th>名稱</th>
@@ -35,7 +35,7 @@
         </tr>
         </tbody>
       </table>
-      <PaginationComponent :pages="pagination" @switch-page="getOrders"></PaginationComponent>
+      <PaginationComponent :pages="pagination" @switch-page="getCoupons"></PaginationComponent>
     </div>
     <LoadingOverlay v-model:active="isLoading"/>
     <DeleteModal ref="modalDelete" :item="tempCoupon"

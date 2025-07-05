@@ -149,7 +149,7 @@
   position: fixed;
   left: 0;
   bottom: 0;
-  z-index: 15;
+  z-index: 2;
   @include medium {
     position: static;
     column-gap: 20px;

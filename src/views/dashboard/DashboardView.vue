@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">後台系統</a>
+        <h5 class="mb-0 me-3 py-2">後台系統</h5>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
          data-bs-target="#navbarText">
           <span class="navbar-toggler-icon"></span>
@@ -18,7 +18,7 @@
               <RouterLink to="/admin/orders">訂單</RouterLink>
             </li>
             <li class="nav-item">
-              <a href="/">回到前台</a>
+              <RouterLink to="/">回到前台</RouterLink>
             </li>
             <li class="nav-item">
               <a href="#" @click.prevent="signout">登出</a>
